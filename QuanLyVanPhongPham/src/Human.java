@@ -12,7 +12,7 @@ public class Human {
         this.id = count;
         this.name = new HumanName(firstName, lastName);
         this.birthday = new Date(d, m, y);
-        this.old = Date.now().toInt() -  this.birthday.toInt();
+        this.old = Date.now().getYear() -  this.birthday.getYear();
         this.phoneNumber = phoneNumber;
     }
 

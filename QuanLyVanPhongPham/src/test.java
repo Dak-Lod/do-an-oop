@@ -13,5 +13,6 @@ public class test {
         y = Integer.parseInt(tmp[2]);
 
         new Human(input[0], input[1], d, m, y, input[3]).export();
+
     }
 }
