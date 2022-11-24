@@ -32,24 +32,27 @@ public class ManagerProduct implements ManageInter {
 
 
     public static void main(String[] args) {
+        MenuSelect menu = new MenuSelect( 8,new String[] {
+            "Thêm sản phẩm",
+            "Tìm kiếm sản phẩm",
+            "Sửa sản phẩm",
+            "Xoá sản phẩm",
+            "Đọc",
+            "Ghi",
+            "Quay lại",
+            "Thoát"
+        });
         while (true) {
-            String select =  new MenuSelect( 8,new String[] {
-                "Thêm sản phẩm",
-                "Tìm kiếm sản phẩm",
-                "Sửa sản phẩm",
-                "Xoá sản phẩm",
-                "Đọc",
-                "Ghi",
-                "Quay lại",
-                "Thoát"
-            }).showMenu();
+            int select =  menu.showMenu();
     
             switch (select) {
-                case "1":
+                case 1:
                     add();
                     break;
-                case "7":
+                case 7:
                     return;
+                case 8:
+                    Main.exit();
             }
 
         }

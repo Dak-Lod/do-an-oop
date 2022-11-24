@@ -1,3 +1,4 @@
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class MenuSelect {
@@ -13,8 +14,8 @@ public class MenuSelect {
 
 
 
-    public String showMenu(){
-        String selection;
+    public int showMenu(){
+        int selection;
         for (int i = 0; i < 52; i++)
             System.out.print("-");
         System.out.println("");
@@ -27,13 +28,15 @@ public class MenuSelect {
                 System.out.print("-");
             System.out.println("");
             System.out.print("Nhập số tương ứng với chức năng bạn chọn: ");
-            selection = Main.sc.nextLine();
-            if (Integer.parseInt(selection)< 1 && Integer.parseInt(selection) > num)
-                System.out.println("Lựa chọn sai!");
+            selection = Main.sc.nextInt();
+            if (selection < 1 && selection > num){
+                throw new InputMismatchException("Lựa chọn sai!");
+            }
+            System.out.println("Đã chọn chức năng: " + this.method[selection - 1]);
             
         }catch (Exception e) {
             System.out.println(e);
-            selection = null;
+            selection = -1;
         }
         return selection;
         

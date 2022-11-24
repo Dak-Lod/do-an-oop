@@ -40,7 +40,7 @@ public class ManagerOrder implements ManageInter{
                     prd[index - 3] = tmp;
                     System.out.println("Nhập số lượng");
                         qty[index - 3] = Main.sc.nextInt();
-                        Main.sc.nextLine();
+                        // Main.sc.nextLine();
                     index ++;
                 
                 }else {
@@ -66,25 +66,28 @@ public class ManagerOrder implements ManageInter{
 
 
     public static void main(String[] args) {
+        MenuSelect menu = new MenuSelect( 8, new String[] {
+            "Thêm hoá đơn",
+            "Tìm kiếm hoá đơn",
+            "Sửa hoá đơn",
+            "Xoá hoá đơn",
+            "Đọc",
+            "Ghi",
+            "Quay lại",
+            "Thoát"
+        });
         while (true){
 
-            String select = new MenuSelect( 8, new String[] {
-                "Thêm hoá đơn",
-                "Tìm kiếm hoá đơn",
-                "Sửa hoá đơn",
-                "Xoá hoá đơn",
-                "Đọc",
-                "Ghi",
-                "Quay lại",
-                "Thoát"
-            }).showMenu();
+            int select = menu.showMenu();
     
             switch (select){
-                case "1":
+                case 1:
                     add();
                     break;
-                case "7":
+                case 7:
                     return;
+                case -1:
+                    break;
             }
         }
 
