@@ -123,6 +123,23 @@ public class Date{
         this.leap = leap;
     }
 
+    public static Date createDateFromString(String str){
+        String[] tmp = new String[255];
+        tmp = str.split("/");
+        int d, m, y;
+        if (tmp[0].length() == 1){
+            d = Character.getNumericValue(tmp[0].charAt(0));
+        }else {
+            d = Integer.parseInt(tmp[0]);
+        }
+        if (tmp[1].length() == 1){
+            m = Character.getNumericValue(tmp[1].charAt(0));
+        }else {
+            m = Integer.parseInt(tmp[1]);
+        }
+        y = Integer.parseInt(tmp[2]);
+        return new Date(d, m, y);
+    }
     
     @Override
     public String toString() {

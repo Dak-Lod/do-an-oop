@@ -2,8 +2,8 @@ import java.util.Scanner;
 
 public class Order {
     private int id;
-    private int idCus; //Id khách hàng
-    private int idEmp; // Id nhân viên
+    private Account cus; //Id khách hàng
+    private Account emp; // Id nhân viên
     int qty; // Số lượng
     private Date dateCreadted; // ngày tạo đơn hàng
     private int total; //Tổng tiền
@@ -11,13 +11,13 @@ public class Order {
     private OrderDetail[] detail;
 
 
-    public Order(int id, int idCus, int idEmp, int qty, Date dateCreadted, int total, Product[] prd, OrderDetail[] detail) {
+    public Order(int id, Account cus, Account emp, int qty, Date dateCreadted, Product[] prd, OrderDetail[] detail) {
         this.id = id;
-        this.idCus = idCus;
-        this.idEmp = idEmp;
+        this.cus = cus;
+        this.emp = emp;
         this.qty = qty;
         this.dateCreadted = dateCreadted;
-        this.total = total;
+        this.prd = prd;
         this.detail = detail;
     }
 
@@ -44,23 +44,23 @@ public class Order {
 
 
 
-    public int getIdCus() {
-        return idCus;
+    public Account getcus() {
+        return cus;
     }
 
 
-    public void setIdCus(int idCus) {
-        this.idCus = idCus;
+    public void setcus(Account cus) {
+        this.cus = cus;
     }
 
 
-    public int getIdEmp() {
-        return idEmp;
+    public Account getemp() {
+        return emp;
     }
 
 
-    public void setIdEmp(int idEmp) {
-        this.idEmp = idEmp;
+    public void setemp(Account emp) {
+        this.emp = emp;
     }
 
 
@@ -94,7 +94,7 @@ public class Order {
     }
 
 
-    public void update(){
+    public void updateOrder(){
         int sum = 0;
         for (int i = 0; i < this.detail.length; i++){
             sum += this.detail[i].getqty();
@@ -106,6 +106,28 @@ public class Order {
         }
     }
     
+    public void showOrder(){
+        System.out.println("Mã hoá đơn: " + this.getId());
+        // System.out.println("Tên khách hàng: " + this.getcus().getUser());
+        // System.out.println("Tên nhân viên bán hàng: " + this.getcus().getUser());
+
+        System.out.printf("|%-15s|%-15s|%-15s|%-15s|\n", "Thứ tự", "Tên sản phẩm", "Mã sản phẩm", "Số lượng");
+        for (int i = 0; i < this.getQty(); i++){
+            System.out.printf("|%-15s|%-15s|%-15s|%-15s|\n", i,this.prd[i].getProductName(),this.prd[i].getProductId(), this.getDetail()[i].getqty());
+        }
+    }
+
+    public static void showOrder(Order ord){
+        Product[] prd = ord.getPrd();
+        System.out.println("Mã hoá đơn: " + ord.getId());
+        System.out.println("Tên khách hàng: " + ord.getcus().getUser());
+        System.out.printf("|%-15s|%-15s|%-15s|%-15s|", "Thứ tự", "Tên sản phẩm", "Mã sản phẩm", "Số lượng");
+        for (int i = 0; i < ord.getQty(); i++){
+            System.out.printf("|%-15s|%-15s|%-15s|%-15s|", i, prd[i].getProductName(),
+                prd[i].getProductId(), ord.getDetail()[i].getqty()
+            );
+        }
+    }
     
 
     

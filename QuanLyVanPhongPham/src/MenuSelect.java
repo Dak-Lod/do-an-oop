@@ -3,7 +3,6 @@ import java.util.Scanner;
 public class MenuSelect {
     private int num;
     private String[] method;
-    static Scanner sc = new Scanner(System.in);
 
     
 
@@ -14,20 +13,20 @@ public class MenuSelect {
 
 
 
-    public int showMethod(){
-        int selection;
+    public String showMenu(){
+        String selection;
         try {
             for (int i = 0; i < num; i++){
                 System.out.println(i + 1 + ". "+ method[i]);
             }
             System.out.print("Nhập số tương ứng với chức năng bạn chọn: ");
-            selection = sc.nextInt();
-            if (selection < 1 && selection > num)
+            selection = Main.sc.nextLine();
+            if (Integer.parseInt(selection)< 1 && Integer.parseInt(selection) > num)
                 System.out.println("Lựa chọn sai!");
             
-        }finally {
-            System.out.println("Lỗi!");
-            selection = -1;
+        }catch (Exception e) {
+            System.out.println(e);
+            selection = null;
         }
         return selection;
     }

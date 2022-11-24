@@ -11,18 +11,17 @@ public class MenuInput {
     }
     
     public String[] showMenu(){
-        Scanner sc = new Scanner(System.in);
         String[] input = new String[100];
         for (int i = 0; i < num; i++){
             try {
             System.out.print(inputString[i] + ":");
-                input[i] = new String(sc.nextLine());
-            }finally {
-                System.out.println("Lỗi!");
-                input = null;            
+            input[i] = Main.sc.nextLine();
+            }catch (Exception e) {
+                System.out.println(e);
+                input = null; 
+                break;       
             }
         }
-        sc.close();
         return input;
     }
 }
