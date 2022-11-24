@@ -15,10 +15,17 @@ public class MenuSelect {
 
     public String showMenu(){
         String selection;
+        for (int i = 0; i < 52; i++)
+            System.out.print("-");
+        System.out.println("");
+
         try {
             for (int i = 0; i < num; i++){
-                System.out.println(i + 1 + ". "+ method[i]);
+                System.out.printf("|\t%-43s|\n", i + 1 + ". "+ method[i]);
             }
+            for (int i = 0; i < 52; i++)
+                System.out.print("-");
+            System.out.println("");
             System.out.print("Nhập số tương ứng với chức năng bạn chọn: ");
             selection = Main.sc.nextLine();
             if (Integer.parseInt(selection)< 1 && Integer.parseInt(selection) > num)
@@ -29,5 +36,6 @@ public class MenuSelect {
             selection = null;
         }
         return selection;
+        
     }
 }

@@ -11,6 +11,7 @@ public class MenuInput {
     }
     
     public String[] showMenu(){
+        
         String[] input = new String[100];
         for (int i = 0; i < num; i++){
             try {
@@ -22,6 +23,7 @@ public class MenuInput {
                 break;       
             }
         }
+
         return input;
     }
 }

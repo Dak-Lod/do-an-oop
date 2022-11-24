@@ -107,26 +107,43 @@ public class Order {
     }
     
     public void showOrder(){
-        System.out.println("Mã hoá đơn: " + this.getId());
+        System.out.printf("\t\t       %-8s       \t\t\n", "HOÁ ĐƠN");
+        System.out.printf( "%s %05d\n","Mã hoá đơn: ", this.getId());
+        System.out.println("Ngày mua: " + this.dateCreadted);
+        System.out.printf("\t\t%-22s\t\t\n", "Danh sách sản phẩm mua");
+        for (int i = 0; i < 54; i++)
+            System.out.print("=");
+        System.out.println();
         // System.out.println("Tên khách hàng: " + this.getcus().getUser());
         // System.out.println("Tên nhân viên bán hàng: " + this.getcus().getUser());
-
-        System.out.printf("|%-15s|%-15s|%-15s|%-15s|\n", "Thứ tự", "Tên sản phẩm", "Mã sản phẩm", "Số lượng");
+        
+        System.out.printf("|%-7s|%-14s|%-14s|%-14s|\n", "Thứ tự", "Tên sản phẩm", "Mã sản phẩm", "Số lượng");
         for (int i = 0; i < this.getQty(); i++){
-            System.out.printf("|%-15s|%-15s|%-15s|%-15s|\n", i,this.prd[i].getProductName(),this.prd[i].getProductId(), this.getDetail()[i].getqty());
+            System.out.printf("|%-7s|%-14s|%-14s|%-14s|\n", i,this.prd[i].getProductName(),this.prd[i].getProductId(), this.getDetail()[i].getqty());
         }
+        for (int i = 0; i < 54; i++)
+            System.out.print("=");
+        System.out.println();
     }
 
     public static void showOrder(Order ord){
-        Product[] prd = ord.getPrd();
-        System.out.println("Mã hoá đơn: " + ord.getId());
-        System.out.println("Tên khách hàng: " + ord.getcus().getUser());
-        System.out.printf("|%-15s|%-15s|%-15s|%-15s|", "Thứ tự", "Tên sản phẩm", "Mã sản phẩm", "Số lượng");
+        System.out.printf("\t\t       %-8s       \t\t\n", "HOÁ ĐƠN");
+        System.out.printf( "%s %05d\n","Mã hoá đơn: ", ord.getId());
+        System.out.println("Ngày mua: " + ord.dateCreadted);
+        System.out.printf("\t\t%-22s\t\t\n", "Danh sách sản phẩm mua");
+        for (int i = 0; i < 54; i++)
+            System.out.print("=");
+        System.out.println();
+        // System.out.println("Tên khách hàng: " + this.getcus().getUser());
+        // System.out.println("Tên nhân viên bán hàng: " + this.getcus().getUser());
+        
+        System.out.printf("|%-7s|%-14s|%-14s|%-14s|\n", "Thứ tự", "Tên sản phẩm", "Mã sản phẩm", "Số lượng");
         for (int i = 0; i < ord.getQty(); i++){
-            System.out.printf("|%-15s|%-15s|%-15s|%-15s|", i, prd[i].getProductName(),
-                prd[i].getProductId(), ord.getDetail()[i].getqty()
-            );
+            System.out.printf("|%-7s|%-14s|%-14s|%-14s|\n", i,ord.prd[i].getProductName(),ord.prd[i].getProductId(), ord.getDetail()[i].getqty());
         }
+        for (int i = 0; i < 54; i++)
+            System.out.print("=");
+        System.out.println();
     }
     
 

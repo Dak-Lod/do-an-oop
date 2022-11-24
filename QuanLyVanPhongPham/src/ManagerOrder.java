@@ -31,7 +31,7 @@ public class ManagerOrder implements ManageInter{
             try {
                 System.out.println("Nhập mã hàng hoá (nhập /ex để kết thúc nhập hàng)");
                 input = Main.sc.nextLine();
-                if (input.indexOf("ex") < 0){
+                if (input.indexOf("/ex") < 0){
                     Product tmp = ManagerProduct.getProductById(Integer.parseInt(input));
                     if ( tmp == null){
                         System.out.println("Không tìm thấy sản phẩm!");
