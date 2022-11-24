@@ -16,13 +16,19 @@ public class MenuSelect {
 
     public int showMethod(){
         int selection;
-        for (int i = 0; i < num; i++){
-            System.out.println(i + 1 + ". "+ method[i]);
+        try {
+            for (int i = 0; i < num; i++){
+                System.out.println(i + 1 + ". "+ method[i]);
+            }
+            System.out.print("Nhập số tương ứng với chức năng bạn chọn: ");
+            selection = sc.nextInt();
+            if (selection < 1 && selection > num)
+                System.out.println("Lựa chọn sai!");
+            
+        }finally {
+            System.out.println("Lỗi!");
+            selection = -1;
         }
-        System.out.print("Nhập số tương ứng với chức năng bạn chọn: ");
-        selection = sc.nextInt();
-        if (selection < 1 && selection > num)
-            System.out.println("Lựa chọn sai!");
         return selection;
     }
 }
