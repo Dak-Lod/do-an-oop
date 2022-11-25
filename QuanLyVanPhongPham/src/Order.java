@@ -100,14 +100,14 @@ public class Order {
             index ++;
         float sum = 0;
         for (int i = 0; i < qty; i++){
-            sum += this.detail[i].getPdt().price * this.detail[i].getQty();
+            sum += this.detail[i].getPdt().getPrice() * this.detail[i].getQty();
         }
         this.total = sum;
     }
     
-    public void showOrder(){
+    public void printOrder(){
         System.out.printf("\t\t\t\t    %-8s    \t\t\t\t\n", "HOÁ ĐƠN");
-        System.out.printf( "%s %05d\n","Mã hoá đơn: ", this.getId());
+        System.out.printf( "%s %-5s\n","Mã hoá đơn: ", this.getId());
         System.out.println("Ngày mua: " + this.dateCreadted);
         System.out.printf("\t\t\t    %-20s    \t\t\t\n", "Danh sách sản phẩm mua");
         for (int i = 0; i < 84; i++)

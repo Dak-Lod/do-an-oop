@@ -2,44 +2,47 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class MenuSelect {
-    private int num;
     private String[] method;
 
     
 
-    public MenuSelect(int num, String[] method) {
-        this.num = num;
+    public MenuSelect(String[] method) {
         this.method = method;
     }
 
 
 
     public int showMenu(){
-        int selection;
+        String selection;
         for (int i = 0; i < 52; i++)
             System.out.print("-");
         System.out.println("");
 
         try {
-            for (int i = 0; i < num; i++){
-                System.out.printf("|\t%-43s|\n", i + 1 + ". "+ method[i]);
+            int index = 0;
+            for (String str: method){
+                System.out.printf("|\t%-43s|\n", ++index + ". "+ str);
             }
             for (int i = 0; i < 52; i++)
                 System.out.print("-");
             System.out.println("");
             System.out.print("Nhập số tương ứng với chức năng bạn chọn: ");
-            selection = Main.sc.nextInt();
-            Main.sc.nextLine();
-            if (selection < 1 && selection > num){
-                throw new InputMismatchException("Lựa chọn sai!");
+            selection = Main.sc.nextLine();
+            try {
+                Integer.parseInt(selection);
+            }catch (Exception e){
+                throw new InputMismatchException();
             }
-            System.out.println("\nĐã chọn chức năng: " + this.method[selection - 1]);
+            if (Integer.parseInt(selection) < 1 || Integer.parseInt(selection) > method.length){
+                throw new InputMismatchException();
+            }
+            System.out.println("\nĐã chọn chức năng: " + this.method[Integer.parseInt(selection) - 1]);
             
         }catch (Exception e) {
-            System.out.println(e);
-            selection = -1;
+            System.out.println("Lựa chọn sai!");
+            selection = "-1";
         }
-        return selection;
+        return Integer.parseInt(selection);
         
     }
 }

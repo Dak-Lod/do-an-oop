@@ -2,28 +2,25 @@ import java.io.IOException;
 import java.util.Scanner;
 
 public class MenuInput {
-    int num;
-    String[] inputString = new String[100];
+    String[] inputString;
 
-    public MenuInput(int num, String[] inputString) {
-        this.num = num;
+    public MenuInput( String[] inputString) {
         this.inputString = inputString;
     }
     
     public String[] showMenu(){
         
         String[] input = new String[100];
-        for (int i = 0; i < num; i++){
+        for (int i = 0; i < inputString.length; i++){
             try {
                 System.out.print(inputString[i] + ": ");
                 input[i] = Main.sc.nextLine();
             }catch (Exception e) {
-                System.out.println(e);
+                System.out.println("Nhập lỗi!");
                 input = null; 
                 break;       
             }
         }
-
         return input;
     }
 }

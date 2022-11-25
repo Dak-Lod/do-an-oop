@@ -22,7 +22,7 @@ public class Main {
         //         break;
         // };
         while (true) {
-            int select = new MenuSelect(3, new String[] {
+            int select = new MenuSelect(new String[] {
                 "Quản lý sản phẩm",
                 "Quản lý đơn hàng",
                 "Thoát"

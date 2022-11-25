@@ -6,31 +6,36 @@ import java.io.FileWriter;
 
 abstract class Manager implements ManagerMethod{
 
-    void getMethod(int select){
+    int getMethod(int select){
         switch (select){
             case 1:
-                add();
+                show();
                 break;
             case 2:
-                search();
+                add();
                 break;
             case 3:
-                edit();
+                search();
                 break;
             case 4:
-                remove();
+                edit();
                 break;
             case 5:
-                read();
+                remove();
                 break;
             case 6:
+                read();
+                break;
+            case 7:
                 write();
                 break;
             case 8:
+                return -1;
+            case 9:
                 Main.exit();
                 break;
-
         }
+        return 0;
     }
 
     String[] read(String url){
@@ -43,12 +48,13 @@ abstract class Manager implements ManagerMethod{
             int index = -1;
 
             while (input != null){
-                input = fiBuf.readLine();
                 index++;
                 data[index] = input;
+                input = fiBuf.readLine();
             }
             
             fiBuf.close();
+            System.out.println("Đọc thành công!");
             return data;
         }catch (Exception e){
             System.out.println("Đọc không thành công!");
@@ -69,6 +75,7 @@ abstract class Manager implements ManagerMethod{
             }
 
             foBuf.close();
+            System.out.println("Ghi thành công!");
         }catch (Exception e){
             System.out.println("Ghi không thành công!");
             System.out.println(e);

@@ -1,8 +1,8 @@
 public class Product {
-    String productId;
-    String productName;
-    float price;
-    String des;
+    private String productId;
+    private String productName;
+    private float price;
+    private String des;
     
     
     public String getProductId() {
@@ -52,7 +52,7 @@ public class Product {
         this.price = price;
     }
 
-    public void show() {
+    public void printProduct() {
         for (int i = 0; i < 49;i++){
             System.out.print("=");
         }
@@ -68,5 +68,9 @@ public class Product {
         System.out.println("\n");
     }    
 
+    @Override
+    public String toString() {
+        return String.join(",", productId, productName, Float.toString(price), des);
+    }
 }
 

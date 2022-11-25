@@ -9,7 +9,7 @@ public class ManagerOrder extends Manager{
 
     @Override
     public void add(){
-        String[] info = new MenuInput(3, new String[] {
+        String[] info = new MenuInput(new String[] {
             "Nhập mã khách hàng",
             "Nhập mã nhân viên",
             "Nhập ngày tạo hoá đơn (dd/mm/yyyy)"
@@ -34,8 +34,7 @@ public class ManagerOrder extends Manager{
                 if (input.indexOf("/ex") < 0){
                     Product tmp = Main.dsSanPham.getProductById(input);
                     if ( tmp == null){
-                        System.out.println("Không tìm thấy sản phẩm!");
-                        return;
+                        continue;
                     }
                     prd[index - 3] = tmp;
                     System.out.println("Nhập số lượng");
@@ -52,36 +51,37 @@ public class ManagerOrder extends Manager{
             }
             
         }
-
+        if (index - 3 == 0){
+            System.out.println("Tạo hoá đơn thất bại!Thiếu sản phẩm");
+            return;
+        }
         for (int i = 0; i < index - 3; i++){
-            ord[i] = new OrderDetail(orderCount, prd[i], qty[i]);
+            ord[i] = new OrderDetail("OD" + Integer.toString(orderCount), prd[i], qty[i]);
         }
         
-        this.orderList[orderCount] = new Order("OD" + Integer.toString(orderCount), cus, emp, index - 3, Date.createDateFromString(info[2]), prd, ord);
-        this.orderList[orderCount].updateOrder();
-        System.out.println("Tạo hoá đơn thành công!\nThông tin hoá đơn:");
-        this.orderList[orderCount].showOrder();
         this.orderCount++;
+        this.orderList[orderCount - 1] = new Order("OD" + Integer.toString(orderCount), cus, emp, index - 3, Date.createDateFromString(info[2]), prd, ord);
+        this.orderList[orderCount - 1].updateOrder();
+        System.out.println("Tạo hoá đơn thành công!\nThông tin hoá đơn:");
+        this.orderList[orderCount - 1].printOrder();
 
     }
 
 
     public void main(String[] args) {
-        MenuSelect menu = new MenuSelect( 8, new String[] {
-            "Thêm hoá đơn",
-            "Tìm kiếm hoá đơn",
-            "Sửa hoá đơn",
-            "Xoá hoá đơn",
-            "Đọc",
-            "Ghi",
-            "Quay lại",
-            "Thoát"
-        });
         while (true){
-
-            int select = menu.showMenu();
-            if (select == 7) return;
-            getMethod(select);
+            int select = new MenuSelect(new String[] {
+                "Danh sách hoá đơn",
+                "Thêm hoá đơn",
+                "Tìm kiếm hoá đơn",
+                "Sửa hoá đơn",
+                "Xoá hoá đơn",
+                "Đọc",
+                "Ghi",
+                "Quay lại",
+                "Thoát"
+            }).showMenu();
+            if (getMethod(select) == -1) return;
         }
 
     }
