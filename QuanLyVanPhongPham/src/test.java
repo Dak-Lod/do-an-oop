@@ -2,11 +2,14 @@ public class test {
     public static void main(String[] args) {
         
         
-        String[] tmp;
-        
-        System.out.println(tmp.length);
-        tmp[3] = "3";
-        System.out.println(tmp.length);
+        String[] tmp = new String[100];
+
+        tmp[0] = "1";
+        tmp[1] = "2";
+        for (String string : tmp) {
+            if (string == null) break;
+            System.out.println(string);
+        }
         
     }
 }

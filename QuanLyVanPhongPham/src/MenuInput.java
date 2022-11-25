@@ -15,8 +15,8 @@ public class MenuInput {
         String[] input = new String[100];
         for (int i = 0; i < num; i++){
             try {
-            System.out.print(inputString[i] + ":");
-            input[i] = Main.sc.nextLine();
+                System.out.print(inputString[i] + ": ");
+                input[i] = Main.sc.nextLine();
             }catch (Exception e) {
                 System.out.println(e);
                 input = null; 

@@ -3,9 +3,8 @@ import java.util.Scanner;
 public class Main {
 
     public static Scanner sc = new Scanner(System.in);
-    // ManagerProduct managerProduct = new ManagerProduct();
-    // ManagerOrder managerOrder = new ManagerOrder();
-    // OrderDetail orderDetail = new OrderDetail(0, null, 0);
+    public static ManagerProduct dsSanPham = new ManagerProduct();
+    public static ManagerOrder dsHoaDon = new ManagerOrder();
 
     public static void exit(){
         sc.close();
@@ -31,10 +30,10 @@ public class Main {
     
             switch (select) {
                 case 1:
-                    ManagerProduct.main(args);
+                    dsSanPham.main(args);
                     break;
                 case 2:
-                    ManagerOrder.main(args);
+                    dsHoaDon.main(args);
                     break;
                 case 3:
                     exit();

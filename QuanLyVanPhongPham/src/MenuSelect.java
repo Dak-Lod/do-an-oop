@@ -29,10 +29,11 @@ public class MenuSelect {
             System.out.println("");
             System.out.print("Nhập số tương ứng với chức năng bạn chọn: ");
             selection = Main.sc.nextInt();
+            Main.sc.nextLine();
             if (selection < 1 && selection > num){
                 throw new InputMismatchException("Lựa chọn sai!");
             }
-            System.out.println("Đã chọn chức năng: " + this.method[selection - 1]);
+            System.out.println("\nĐã chọn chức năng: " + this.method[selection - 1]);
             
         }catch (Exception e) {
             System.out.println(e);

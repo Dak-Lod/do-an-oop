@@ -1,14 +1,14 @@
 import java.util.Scanner;
 
-public class ManagerOrder implements ManageInter{
+public class ManagerOrder extends Manager{
     
-    static Order[] orderList = new Order[100];
-    static OrderDetail[] orderDetailList = new OrderDetail[100];
+    private Order[] orderList = new Order[100];
+    private OrderDetail[] orderDetailList = new OrderDetail[100];
     
-    static int orderCount = 0;
+    private int orderCount = 0;
 
-    
-    public static void add(){
+    @Override
+    public void add(){
         String[] info = new MenuInput(3, new String[] {
             "Nhập mã khách hàng",
             "Nhập mã nhân viên",
@@ -32,7 +32,7 @@ public class ManagerOrder implements ManageInter{
                 System.out.println("Nhập mã hàng hoá (nhập /ex để kết thúc nhập hàng)");
                 input = Main.sc.nextLine();
                 if (input.indexOf("/ex") < 0){
-                    Product tmp = ManagerProduct.getProductById(Integer.parseInt(input));
+                    Product tmp = Main.dsSanPham.getProductById(input);
                     if ( tmp == null){
                         System.out.println("Không tìm thấy sản phẩm!");
                         return;
@@ -40,7 +40,7 @@ public class ManagerOrder implements ManageInter{
                     prd[index - 3] = tmp;
                     System.out.println("Nhập số lượng");
                         qty[index - 3] = Main.sc.nextInt();
-                        // Main.sc.nextLine();
+                        Main.sc.nextLine();
                     index ++;
                 
                 }else {
@@ -53,19 +53,20 @@ public class ManagerOrder implements ManageInter{
             
         }
 
-        ManagerOrder.orderCount++;
         for (int i = 0; i < index - 3; i++){
             ord[i] = new OrderDetail(orderCount, prd[i], qty[i]);
         }
-        ManagerOrder.orderList[orderCount] = new Order(orderCount, cus, emp, index - 3, Date.createDateFromString(info[2]), prd, ord);
+        
+        this.orderList[orderCount] = new Order("OD" + Integer.toString(orderCount), cus, emp, index - 3, Date.createDateFromString(info[2]), prd, ord);
+        this.orderList[orderCount].updateOrder();
         System.out.println("Tạo hoá đơn thành công!\nThông tin hoá đơn:");
-        ManagerOrder.orderList[orderCount].showOrder();
+        this.orderList[orderCount].showOrder();
+        this.orderCount++;
 
     }
 
 
-
-    public static void main(String[] args) {
+    public void main(String[] args) {
         MenuSelect menu = new MenuSelect( 8, new String[] {
             "Thêm hoá đơn",
             "Tìm kiếm hoá đơn",
@@ -79,39 +80,22 @@ public class ManagerOrder implements ManageInter{
         while (true){
 
             int select = menu.showMenu();
-    
-            switch (select){
-                case 1:
-                    add();
-                    break;
-                case 7:
-                    return;
-                case -1:
-                    break;
-            }
+            if (select == 7) return;
+            getMethod(select);
         }
 
     }
 
 
 
-    
+    @Override
     public void edit() {
-        // TODO Auto-generated method stub
-        
+
     }
 
 
 
-    
-    public void delete() {
-        // TODO Auto-generated method stub
-        
-    }
-
-
-
-    
+    @Override
     public void search() {
         // TODO Auto-generated method stub
         
@@ -119,8 +103,29 @@ public class ManagerOrder implements ManageInter{
 
 
 
-    
+    @Override
     public void show() {
+        // TODO Auto-generated method stub
+        
+    }
+
+
+    @Override
+    public void read() {
+        // TODO Auto-generated method stub
+        // super.read();
+    }
+
+
+    @Override
+    public void write() {
+        // TODO Auto-generated method stub
+        
+    }
+
+
+    @Override
+    public void remove() {
         // TODO Auto-generated method stub
         
     }
