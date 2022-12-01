@@ -32,7 +32,7 @@ public class ManagerOrder extends Manager{
                 System.out.println("Nhập mã hàng hoá (nhập /ex để kết thúc nhập hàng)");
                 input = Main.sc.nextLine();
                 if (input.indexOf("/ex") < 0){
-                    Product tmp = Main.dsSanPham.getProductById(input);
+                    Product tmp = Main.qlSanPham.getProductById(input);
                     if ( tmp == null){
                         continue;
                     }

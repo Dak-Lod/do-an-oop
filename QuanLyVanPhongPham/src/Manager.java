@@ -54,10 +54,10 @@ abstract class Manager implements ManagerMethod{
             }
             
             fiBuf.close();
-            System.out.println("Đọc thành công!");
+            System.out.println("Đọc file thành công!");
             return data;
         }catch (Exception e){
-            System.out.println("Đọc không thành công!");
+            System.out.println("Đọc file không thành công!");
             System.out.println(e);
             return null;
         }
@@ -75,9 +75,9 @@ abstract class Manager implements ManagerMethod{
             }
 
             foBuf.close();
-            System.out.println("Ghi thành công!");
+            System.out.println("Ghi file thành công!");
         }catch (Exception e){
-            System.out.println("Ghi không thành công!");
+            System.out.println("Ghi file không thành công!");
             System.out.println(e);
         }
     }

@@ -1,12 +1,12 @@
 public class OrderDetail {
     private String orderId; //id hoá đơn đã mua
-    private Product pdt; 
+    private Product prd; 
     private int qty; //số lượng mặt hàng
 
 
-    public OrderDetail(String orderId, Product pdt, int qty) {
+    public OrderDetail(String orderId, Product prd, int qty) {
         this.orderId = orderId;
-        this.pdt = pdt;
+        this.prd = prd;
         this.qty = qty;
     }
 
@@ -27,13 +27,13 @@ public class OrderDetail {
         this.qty = qty;
     }
 
-    public Product getPdt() {
-        return pdt;
+    public Product getprd() {
+        return prd;
     }
 
 
-    public void setPdt(Product pdt) {
-        this.pdt = pdt;
+    public void setprd(Product prd) {
+        this.prd = prd;
     } 
 
 

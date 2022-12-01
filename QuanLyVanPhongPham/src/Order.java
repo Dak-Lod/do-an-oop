@@ -100,7 +100,7 @@ public class Order {
             index ++;
         float sum = 0;
         for (int i = 0; i < qty; i++){
-            sum += this.detail[i].getPdt().getPrice() * this.detail[i].getQty();
+            sum += this.detail[i].getprd().getPrice() * this.detail[i].getQty();
         }
         this.total = sum;
     }

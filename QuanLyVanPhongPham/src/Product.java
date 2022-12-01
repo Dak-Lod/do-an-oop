@@ -3,7 +3,7 @@ public class Product {
     private String productName;
     private float price;
     private String des;
-    
+    private int qty;
     
     public String getProductId() {
         return productId;
@@ -50,6 +50,7 @@ public class Product {
         this.productName = productName;
         this.des = description;
         this.price = price;
+        this.qty = 0;
     }
 
     public void printProduct() {
@@ -62,6 +63,7 @@ public class Product {
         System.out.printf("|\t%-36s\t|\n", "Tên sản phẩm: " + this.productName);
         System.out.printf("|\t%-36s\t|\n","Giá thành: " + this.price + "$");
         System.out.printf("|\t%-36s\t|\n","Mô tả: " + this.des);
+        System.out.printf("|\t%-36s\t|\n","Kho: " + this.qty);
         for (int i = 0; i < 49;i++){
             System.out.print("=");
         }
