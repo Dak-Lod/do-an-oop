@@ -30,10 +30,12 @@ public class ManagerOrder extends Manager{
         Main.qlSanPham.show();
         while (true){
             try {
-                String info = new MenuInput(new String[]{
+                String[] result = new MenuInput(new String[]{
                     "Nhập mã sản phẩm"
-                }).showMenu()[0];
+                }).showMenu();
                 
+                if (result != null){
+                    
                 }else {
                     break;
                 }
