@@ -349,23 +349,6 @@ public class ManagerProduct extends Manager{
     }
     
 
-
-    
-    
-
-    
-
-
-    
-
-    
-
-
-
-    
-
-    
-
     public Product[] getProductList() {
         return productList;
     }

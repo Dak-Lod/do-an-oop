@@ -27,20 +27,12 @@ public class ManagerOrder extends Manager{
         int[] qty = new int[100]; 
         Product[] prd = new Product[100]; 
         OrderDetail[] ord = new OrderDetail[100];
+        Main.qlSanPham.show();
         while (true){
             try {
-                System.out.println("Nhập mã hàng hoá (nhập /ex để kết thúc nhập hàng)");
-                input = Main.sc.nextLine();
-                if (input.indexOf("/ex") < 0){
-                    Product tmp = Main.qlSanPham.getProductById(input);
-                    if ( tmp == null){
-                        continue;
-                    }
-                    prd[index - 3] = tmp;
-                    System.out.println("Nhập số lượng");
-                        qty[index - 3] = Main.sc.nextInt();
-                        Main.sc.nextLine();
-                    index ++;
+                String info = new MenuInput(new String[]{
+                    "Nhập mã sản phẩm"
+                }).showMenu()[0];
                 
                 }else {
                     break;
