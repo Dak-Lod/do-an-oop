@@ -1,4 +1,5 @@
 import java.io.File;
+import java.sql.Date;
 import java.util.Scanner;
 
 public class ManageAccount extends Manager{
@@ -58,13 +59,15 @@ public class ManageAccount extends Manager{
             "Nhập username",
             "Nhập mật khẩu",
             "Nhập quyền (0/1/2)",
+            "Nhập tên tài khoản",
+            "Nhập năm sinh (dd/mm/yyyy)",    
         }).showMenu();   
 
         if (info == null) return;
         accCount ++;
         idCount ++;
         String id = Integer.toString(idCount);
-        accList[accCount - 1] = new Account(id, info[0], info[1], Integer.parseInt(info[2]));
+        accList[accCount - 1] = new Account(info[0], info[1], Integer.parseInt(info[2]), info[3], Date.valueOf(info[4]));
 
         System.out.println("Tạo tài khoản thành công!");
 
@@ -92,7 +95,7 @@ public class ManageAccount extends Manager{
 
             for (int i = 0; i < idCount; i++){
                 System.out.println("Test");
-                if (accList[i].getAccId().equals(info[0].trim())){
+                if (accList[i].getId().equals(info[0].trim())){
                     while (true){
                         int select = new MenuSelect(new String[]{
                             "Thay đổi mã tài khoản",
@@ -104,18 +107,18 @@ public class ManageAccount extends Manager{
 
                         MenuInput[] infoChange = new MenuInput[10];
                         infoChange[0] = new MenuInput(new String[] {
-                            "id cũ: " + accList[i].getAccId() + "\nid mới"
+                            "id cũ: " + accList[i].getId() + "\nid mới"
                         });
                         infoChange[1] = new MenuInput(new String[] {
-                            "username cũ: " + accList[i].getAccId() + "\nusername mới"
+                            "username cũ: " + accList[i].getId() + "\nusername mới"
                         });
                         
                         infoChange[2] = new MenuInput(new String[] {
-                            "pass cũ: " + accList[i].getAccId() + "\npass mới"
+                            "pass cũ: " + accList[i].getId() + "\npass mới"
                         });
         
                         infoChange[3] = new MenuInput(new String[] {
-                            "quyền cũ: " + accList[i].getAccId() + "\nquyền mới"
+                            "quyền cũ: " + accList[i].getId() + "\nquyền mới"
                         });
 
                         String strChange;
@@ -126,7 +129,7 @@ public class ManageAccount extends Manager{
                                     if (getAccountbyId(strChange) != null){
                                         System.out.println("id mới bị trùng, không thể đổi!");
                                     } else {
-                                        accList[i].setAccbyId(strChange);
+                                        accList[i].setId(strChange);
                                         System.out.println("Đổi id thành công!");
                                         accList[i].printAccount();
                                     }
@@ -138,7 +141,7 @@ public class ManageAccount extends Manager{
                                     if (getAccountbyId(strChange) != null){
                                         System.out.println("username mới bị trùng, không thể đổi!");
                                     } else {
-                                        accList[i].setAccbyId(strChange);
+                                        accList[i].setId(strChange);
                                         System.out.println("Đổi username thành công!");
                                         accList[i].printAccount();
                                     }
@@ -150,7 +153,7 @@ public class ManageAccount extends Manager{
                                     if (getAccountbyId(strChange) != null){
                                         System.out.println("pass mới bị trùng, không thể đổi!");
                                     } else {
-                                        accList[i].setAccbyId(strChange);
+                                        accList[i].setId(strChange);
                                         System.out.println("Đổi pass thành công!");
                                         accList[i].printAccount();
                                     }
@@ -162,7 +165,7 @@ public class ManageAccount extends Manager{
                                     if (getAccountbyId(strChange) != null){
                                         System.out.println("quyền mới bị trùng, không thể đổi!");
                                     } else {
-                                        accList[i].setAccbyId(strChange);
+                                        accList[i].setId(strChange);
                                         System.out.println("Đổi quyền thành công!");
                                         accList[i].printAccount();
                                     }
@@ -228,9 +231,9 @@ public class ManageAccount extends Manager{
         if (info != null){
             for (int i = 0; i < idCount; i++) {
                 if (accList[i] == null) continue;
-                if (accList[i].getAccId().equals(info[0].trim())){
+                if (accList[i].getId().equals(info[0].trim())){
                     accCount --;
-                    System.out.println("Đã xóa sản phẩm" + accList[i].getAccName());
+                    System.out.println("Đã xóa sản phẩm" + accList[i].getUser());
                     for (int x = i; x < idCount - 1; x++) {
                         accList[x] = accList[x + 1];
                     }
@@ -264,13 +267,13 @@ public class ManageAccount extends Manager{
         int index = -1;
         for (int i = 0; i < idCount; i++){
             if (accList[i] == null) continue;
-            if (((String) accList[i].getAccName()).toLowerCase().indexOf(name.toLowerCase()) > -1 || ((String) accList[i].getAccName()).toLowerCase().indexOf(Main.removeAccents(name.toLowerCase())) > -1){
+            if (((String) accList[i].getUser()).toLowerCase().indexOf(name.toLowerCase()) > -1 || ((String) accList[i].getUser()).toLowerCase().indexOf(Main.removeAccents(name.toLowerCase())) > -1){
                 index ++;
                 result[index] = accList[i];
             }
         }
         if (index > -1){
-            System.out.println("Đã tìm thấy " + (i + 1) + " tài khoản!");
+            System.out.println("Đã tìm thấy " + (index + 1) + " tài khoản!");
             this.show(result);
         } else {
             System.out.println("Không tìm thấy tài khoản!");
@@ -282,7 +285,7 @@ public class ManageAccount extends Manager{
     public static Account getAccountbyId(String id){
         for (int i = 0; i < idCount; i++){
             if (accList[i] == null) continue;
-            if (accList[i].getAccId().equals(id.trim())){
+            if (accList[i].getId().equals(id.trim())){
                 return accList[i];
             }
             return null;
