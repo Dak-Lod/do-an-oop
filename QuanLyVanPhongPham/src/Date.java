@@ -8,9 +8,6 @@ public class Date{
     
 
     public Date(int day, int month, int year) {
-        // this.day = day;
-        // this.month = month;
-        // this.year = year;
         this.setDay(day);
         this.setMonth(month);
         this.setYear(year);

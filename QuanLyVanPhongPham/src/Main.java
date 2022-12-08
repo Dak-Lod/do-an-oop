@@ -5,6 +5,7 @@ public class Main {
     public static Scanner sc = new Scanner(System.in);
     public static ManagerProduct qlSanPham = new ManagerProduct();
     public static ManagerOrder qlHoaDon = new ManagerOrder();
+    public static ManagerWareHouse qlWareHouse = new ManagerWareHouse();
     
     // public static ManagerAccount qlTaiKhoan = new ManagerAccount();
     // public static ManagerWareHouse qlKhoHang = new ManagerWareHouse();
@@ -52,6 +53,7 @@ public class Main {
             int select = new MenuSelect(new String[] {
                 "Quản lý sản phẩm",
                 "Quản lý đơn hàng",
+                "Quản lý kho hàng",
                 "Thoát"
             }).showMenu();
     
@@ -63,6 +65,9 @@ public class Main {
                     qlHoaDon.main(args);
                     break;
                 case 3:
+                    qlWareHouse.main(args);
+                    break;
+                case 4:
                     exit();
                     return;
                 case -1:
