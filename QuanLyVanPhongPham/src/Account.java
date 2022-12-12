@@ -1,28 +1,38 @@
-
-
-import java.sql.Date;
-
 public class Account {
     private String id;
     private String user;
     private String pass;
+    private String name;
+    private Human info;
     private int role; // 0: Customer, 1: Employee, 2:Admin
     public static int accCount = 0;
     
     Account(String user, String pass, int role, String name, Date birthday){ //Create Account from interface
         accCount ++;
-        id = accCount;
+        id = Integer.toString(accCount);
         this.user = user;
         this.pass = pass;
         this.role = role;
+        this.name = name;
+
+        if (role == 0) {
+            
+        }
     }
     
+    public Account() {
+    }
+
     public String getId() {
         return id;
     }
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public void setUser(String user) {
+    this.user = user;
     }
 
     public String getUser(){
@@ -35,6 +45,14 @@ public class Account {
 
     public int getRole(){
         return this.role;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public void printAccount() {
@@ -54,6 +72,6 @@ public class Account {
     
     @Override
     public String toString() {
-        return String.join(",", id, user, Integer.parseInt(role));
+        return String.valueOf(",");
     }
 }

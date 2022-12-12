@@ -1,7 +1,3 @@
-import java.io.File;
-import java.sql.Date;
-import java.util.Scanner;
-
 public class ManageAccount extends Manager{
     private static Account[] accList = new Account[100];
     
@@ -10,8 +6,9 @@ public class ManageAccount extends Manager{
 
     private String file_url = "accList.txt";
 
-    public static void main(String[] args) {
-        MenuSelect menu =  new MenuSelect(new String[] {
+    public void main(String[] args) {
+        while (true) {
+            MenuSelect menu =  new MenuSelect(new String[] {
                 "Danh sách tài khoản",
                 "Thêm tài khoản",
                 "Tìm kiếm tài khoản",
@@ -22,8 +19,9 @@ public class ManageAccount extends Manager{
                 "Quay lại",
                 "Thoát"
             });
-        int select = menu.showMenu();
-        if (getMethod(select) == -1) return;
+            int select = menu.showMenu();
+            if (getMethod(select) == -1) return;
+        }
     }
 
     @Override
@@ -66,8 +64,7 @@ public class ManageAccount extends Manager{
         if (info == null) return;
         accCount ++;
         idCount ++;
-        String id = Integer.toString(idCount);
-        accList[accCount - 1] = new Account(info[0], info[1], Integer.parseInt(info[2]), info[3], Date.valueOf(info[4]));
+        accList[accCount - 1] = new Account(info[0], info[1], Integer.parseInt(info[2]), info[3], Date.createDateFromString(info[4]));
 
         System.out.println("Tạo tài khoản thành công!");
 
@@ -88,7 +85,7 @@ public class ManageAccount extends Manager{
                 return;
             }
             String[] info = new MenuInput(new String[] {
-                "Nhập mã tài khoản cần sửa";
+                "Nhập mã tài khoản cần sửa",
             }).showMenu();
 
             if (info == null) return;
@@ -233,7 +230,7 @@ public class ManageAccount extends Manager{
                 if (accList[i] == null) continue;
                 if (accList[i].getId().equals(info[0].trim())){
                     accCount --;
-                    System.out.println("Đã xóa sản phẩm" + accList[i].getUser());
+                    System.out.println("Đã xóa tài khoảm" + accList[i].getUser());
                     for (int x = i; x < idCount - 1; x++) {
                         accList[x] = accList[x + 1];
                     }
@@ -254,7 +251,7 @@ public class ManageAccount extends Manager{
                 System.out.println("Thêm tài khoản dòng " + (i + 1) + " không thành công (Mã tài khoản bị trùng)!");
                 continue;
             }
-            add(new Account(tmp[0], tmp[1], Integer.parseInt(tmp[2]), tmp[3], null))
+            add(new Account(tmp[0], tmp[1], Integer.parseInt(tmp[2]), tmp[3], null));
         }
     }
 

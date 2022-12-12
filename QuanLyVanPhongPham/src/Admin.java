@@ -1,10 +1,13 @@
 
-public class Admin extends Human{
-    private Account acc;
+public class Admin extends Account{
 
-    public Admin(Account acc) {
-        super();
-        this.acc = acc;
+    public Admin(String user, String pass, int role, String name, Date birthday) {
+        super(user, pass, role, name, birthday);
     }
+
+    public Admin() {
+    }
+
+    
     
 }
