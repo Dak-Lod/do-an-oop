@@ -6,7 +6,7 @@ public class ManagerWareHouse extends Manager{
     private int wareHouseCount = 0;
     private int idCount = 0;
 
-    private String file_url = "WareHouse.txt";
+    private String file_url = "DSKH.txt";
     
     public void main(String[] args) {
         while (true) {

@@ -5,7 +5,7 @@ public class ManagerProduct extends Manager{
     private Product[] productList = new Product[100];
 
     private int productCount = 0;
-    private int idCount = 0;
+    // private int idCount = 0;
 
     private String file_url = "DSSP.txt";
     
@@ -39,35 +39,48 @@ public class ManagerProduct extends Manager{
             return;
         }
         System.out.printf("\t\t\t           %-21s           \t\t\t\n", "DANH SÁCH SẢN PHẨM");
-        for (int i = 0; i < 92; i++)
+        for (int i = 0; i < 107; i++)
             System.out.print("=");
         System.out.println();
-        System.out.printf("|%-7s|%-7s|%-29s|%-14s|%-29s|\n", "STT", "ID", "Tên sản phẩm", "Đơn giá", "Mô tả");
-        for (int i = 0; i < 92; i++)
+        System.out.printf("|%-7s|%-7s|%-29s|%-14s|%-14s|%-29s|\n", "STT", "ID", "Tên sản phẩm", "Đơn giá", "Số lượng", "Mô tả");
+        for (int i = 0; i < 107; i++)
             System.out.print("-");
         System.out.println();
-        for (int i = 0; i < prd.length; i++){
+        for (int i = 0; i < productCount; i++){
             if (prd[i] == null) break;
-            System.out.printf("|%-7s|%-7s|%-29s|%-14s|%-29s|\n", (i + 1),prd[i].getProductId(),prd[i].getProductName(), prd[i].getPrice(), prd[i].getDes());
+            System.out.printf("|%-7s|%-7s|%-29s|%-14s|%-14s|%-29s|\n", (i + 1),prd[i].getProductId(),prd[i].getProductName(), prd[i].getPrice(), prd[i].getQty(), prd[i].getDes());
         }
-        for (int i = 0; i < 92; i++)
+        for (int i = 0; i < 107; i++)
             System.out.print("=");
         System.out.println();
     }
 
     @Override
     public void add(){
+        
+        MenuInput getId = new MenuInput(new String[] {
+            "Nhập mã sản phẩm"
+        });
+
+        String[] id = getId.showMenu();
+
+        while(getProductById(id[0]) != null){
+            System.out.println("Mã sản phẩm bị trùng vui lòng nhập lại!");
+            id = getId.showMenu();
+        }
+        if (id == null) return;
+
         String[] info = new MenuInput(new String[] {
             "Nhập tên sản phẩm",
             "Nhập giá tiền (Đô la $)",
-            "Nhập mô tả sản phẩm"
+            "Nhập mô tả sản phẩm",
+            "Nhập số lượng"
         }).showMenu();
+
 
         if (info == null) return;
         productCount ++;
-        idCount ++;
-        String id = "PRD" + Integer.toString(idCount);
-        productList[productCount - 1] = new Product(id, info[0], Float.parseFloat(info[1]), info[2]);
+        productList[productCount - 1] = new Product(id[0], info[0], Float.parseFloat(info[1]), info[2], Integer.parseInt(info[3]));
         
         System.out.println("Tạo sản phẩm thành công!");
 
@@ -77,8 +90,7 @@ public class ManagerProduct extends Manager{
 
     public void add(Product prd){
         productCount++;
-        idCount++;
-        productList[idCount - 1] = prd;
+        productList[productCount - 1] = prd;
     }
 
     @Override
@@ -94,7 +106,7 @@ public class ManagerProduct extends Manager{
     
             if (info == null) return;
             
-            for (int i = 0; i < idCount; i++){
+            for (int i = 0; i < productCount; i++){
                 System.out.println("Test");
                 if (productList[i].getProductId().equals(info[0].trim())){
                     
@@ -163,7 +175,7 @@ public class ManagerProduct extends Manager{
                                 case 4:
                                     strChange = infoChange[2].showMenu()[0];
                                     if (strChange != null){
-                                        productList[i].setDescription(strChange);
+                                        productList[i].setDes(strChange);
                                         System.out.println("Đổi mô tả sản phẩm thành công!");
                                         productList[i].printProduct();
                                     }
@@ -243,19 +255,19 @@ public class ManagerProduct extends Manager{
             "Nhập mã sản phẩm cần xoá"
         }).showMenu();
 
-        if (info != null)
-            for (int i = 0; i < idCount; i++) {
-                if (productList[i] == null) continue;
-                if (productList[i].getProductId().equals(info[0].trim())) {
-                    productCount--;
-                    System.out.println("Đã xoá sản phẩm " + productList[i].getProductName());
-                    for (int x = i; x < idCount - 1; x ++){
-                        productList[x] = productList[x + 1];
-                    }
-                    productList[idCount - 1] = null;
-                    return;
+        if (info == null) return;
+
+        for (int i = 0; i < productCount; i++) {
+            if (productList[i].getProductId().equals(info[0].trim())) {
+                productCount--;
+                System.out.println("Đã xoá sản phẩm " + productList[i].getProductName());
+                productList[i] = null;
+                for (int x = i; x < productCount; x ++){
+                    productList[x] = productList[x + 1];
                 }
+                return;
             }
+        }
         
     }
 
@@ -270,7 +282,7 @@ public class ManagerProduct extends Manager{
                 System.out.println("Thêm sản phẩm dòng " + (i + 1) + " không thành công (Mã sản phẩm bị trùng)!");
                 continue;
             }
-            add(new Product(tmp[0], tmp[1], Float.parseFloat(tmp[2]), tmp[3]));
+            add(new Product(tmp[0], tmp[1], Float.parseFloat(tmp[2]), tmp[3], Integer.parseInt(tmp[4])));
         }        
 
     }
@@ -292,7 +304,7 @@ public class ManagerProduct extends Manager{
     public Product[] getProductByPrice(float min, float max){
         Product[] result = new Product[100];
         int index = -1;
-        for (int i = 0; i < idCount; i++) {
+        for (int i = 0; i < productCount; i++) {
             if (productList[i] == null) continue;
             if (productList[i].getPrice() >= min && productList[i].getPrice() <= max){
                 index++;
@@ -316,7 +328,7 @@ public class ManagerProduct extends Manager{
     public Product[] getProductByName(String name){
         Product[] result = new Product[100];
         int index = -1;
-        for (int i = 0; i < idCount; i++) {
+        for (int i = 0; i < productCount; i++) {
             if (productList[i] == null) continue;
             if (productList[i].getProductName().toLowerCase().indexOf(name.toLowerCase()) > -1 || 
             productList[i].getProductName().toLowerCase().indexOf(Main.removeAccents(name.toLowerCase())) > -1){
@@ -339,7 +351,7 @@ public class ManagerProduct extends Manager{
     }
 
     public Product getProductById(String id){
-        for (int i = 0; i < idCount; i++) {
+        for (int i = 0; i < productCount; i++) {
             if (productList[i] == null) continue;
             if (productList[i].getProductId().equals(id.trim())) 
                 return productList[i];

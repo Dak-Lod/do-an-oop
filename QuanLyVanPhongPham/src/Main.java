@@ -6,7 +6,7 @@ public class Main {
     public static ManagerProduct qlSanPham = new ManagerProduct();
     public static ManagerOrder qlHoaDon = new ManagerOrder();
     public static ManagerWareHouse qlWareHouse = new ManagerWareHouse();
-    
+    public static ManageAccount qlTaiKhoan = new ManageAccount();
     // public static ManagerAccount qlTaiKhoan = new ManagerAccount();
     // public static ManagerWareHouse qlKhoHang = new ManagerWareHouse();
 
@@ -51,6 +51,7 @@ public class Main {
         // };
         while (true) {
             int select = new MenuSelect(new String[] {
+                "Quản lý tài khoản",
                 "Quản lý sản phẩm",
                 "Quản lý đơn hàng",
                 "Quản lý kho hàng",
@@ -59,15 +60,18 @@ public class Main {
     
             switch (select) {
                 case 1:
-                    qlSanPham.main(args);
+                    qlTaiKhoan.main(args);
                     break;
                 case 2:
-                    qlHoaDon.main(args);
+                    qlSanPham.main(args);
                     break;
                 case 3:
-                    qlWareHouse.main(args);
+                    qlHoaDon.main(args);
                     break;
                 case 4:
+                    qlWareHouse.main(args);
+                    break;
+                case 5:
                     exit();
                     return;
                 case -1:

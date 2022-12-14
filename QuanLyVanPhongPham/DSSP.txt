@@ -1,6 +1,6 @@
-PRD1,Bút bi,2.0,Bút mực
-PRD2,Bút chì,1.0,Bút chì 2B
-PRD2,Bút chì,1.0,Bút chì 2B
-PRD3,Thước thẳng 20cm,3.0,Thước kẻ
-PRD4,Bàn học,50.0,Bàn học gỗ cao 1m
-PRD4,Bàn học,50.0,Bàn học gỗ cao 1m
+PRD1,Bút bi,2.0,Bút mực,10
+PRD2,Bút chì,1.0,Bút chì 2B,10
+PRD2,Bút chì,1.0,Bút chì 2B,10
+PRD3,Thước thẳng 20cm,3.0,Thước kẻ,10
+PRD4,Bàn học,50.0,Bàn học gỗ cao 1m,10
+PRD4,Bàn học,50.0,Bàn học gỗ cao 1m,10

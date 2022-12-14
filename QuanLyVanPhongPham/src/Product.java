@@ -30,7 +30,7 @@ public class Product {
     }
 
 
-    public void setDescription(String des) {
+    public void setDes(String des) {
         this.des = des;
     }
 
@@ -45,12 +45,12 @@ public class Product {
     }
 
 
-    public Product(String productId, String productName, float price, String description) {
+    public Product(String productId, String productName, float price, String description, int qty) {
         this.productId = productId;
         this.productName = productName;
         this.des = description;
         this.price = price;
-        this.qty = 0;
+        this.qty = qty;
     }
 
     public void printProduct() {
@@ -73,6 +73,16 @@ public class Product {
     @Override
     public String toString() {
         return String.join(",", productId, productName, Float.toString(price), des);
+    }
+
+
+    public int getQty() {
+        return qty;
+    }
+
+
+    public void setQty(int qty) {
+        this.qty = qty;
     }
 }
 

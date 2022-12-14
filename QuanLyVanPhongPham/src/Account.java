@@ -1,6 +1,5 @@
 
 
-import java.sql.Date;
 
 public class Account {
     private String id;
@@ -11,7 +10,7 @@ public class Account {
     
     Account(String user, String pass, int role, String name, Date birthday){ //Create Account from interface
         accCount ++;
-        id = accCount;
+        id = String.valueOf(accCount);
         this.user = user;
         this.pass = pass;
         this.role = role;
@@ -54,6 +53,6 @@ public class Account {
     
     @Override
     public String toString() {
-        return String.join(",", id, user, Integer.parseInt(role));
+        return String.join(",", id, user, String.valueOf(role));
     }
 }
