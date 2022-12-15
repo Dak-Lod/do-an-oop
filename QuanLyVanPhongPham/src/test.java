@@ -1,5 +1,3 @@
-import java.lang.reflect.Array;
-import java.util.Arrays;
 
 public class test {
 
@@ -27,13 +25,12 @@ public class test {
 
     public static void main(String[] args) {
         
-        int[] n = new int[100];
+        int select = new MenuSelect(new String[] {
+            "asdf",
+            "asdf"
+        }).showMenu();
 
-        n[0] = 1;
-        n[1] = 2;
-        n[2] = 3;
-
-        
+        System.out.println(select);
         
     }
 }

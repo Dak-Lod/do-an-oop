@@ -277,6 +277,8 @@ public class ManagerProduct extends Manager{
         productCount = 0;
         for (int i = 0; i < data.length; i++) {
             if (data[i] == null) continue;
+            if (data[4] == null || data[7].trim().equals(""))       
+                continue;
             String[] tmp = data[i].split(",");
             if (getProductById(tmp[0]) != null){
                 System.out.println("Thêm sản phẩm dòng " + (i + 1) + " không thành công (Mã sản phẩm bị trùng)!");

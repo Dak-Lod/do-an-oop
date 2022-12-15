@@ -1,4 +1,3 @@
-
 public class ManagerWareHouse extends Manager{
     
     private WareHouse[] wareHouseList = new WareHouse[100];

@@ -1,5 +1,3 @@
-import java.util.Scanner;
-
 public class Order {
     private String id;
     private Account cus; //Id khách hàng
