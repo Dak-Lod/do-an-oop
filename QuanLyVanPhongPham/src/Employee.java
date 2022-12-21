@@ -1,5 +1,4 @@
 public class Employee extends Human{
-    final int role = 1;
     private int hours;
     private float salary;
     public Employee(String firstName, String lastName, int d, int m, int y, String phoneNumber) {

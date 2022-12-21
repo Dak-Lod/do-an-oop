@@ -1,5 +1,3 @@
-import javax.security.auth.Subject;
-
 public class ManagerProduct extends Manager{
     
     private Product[] productList = new Product[100];
@@ -9,7 +7,7 @@ public class ManagerProduct extends Manager{
 
     private String file_url = "DSSP.txt";
     
-    public void main(String[] args) {
+    public void main() {
         while (true) {
             MenuSelect menu = new MenuSelect(new String[] {
                 "Danh sách sản phẩm",

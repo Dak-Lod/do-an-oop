@@ -59,7 +59,7 @@ abstract class Manager implements ManagerMethod{
         }catch (Exception e){
             System.out.println("Đọc file không thành công!");
             System.out.println(e);
-            return null;
+            return data;
         }
 
     }

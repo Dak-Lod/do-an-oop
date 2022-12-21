@@ -1,1 +1,4 @@
-ad1,admin,admin,0,tran,loc,5/6/2003,033796175
+ad1,admin,admin,0,Trần,Lộc,6/5/2003,0337961759
+em1,em,em,1,Trần,Lộc,6/5/2003,0337961759
+cus1,cus,cus,2,Trần,Lộc,6/5/2003,0337961759
+ad2,admin2,admin2,0,Trần,Lộc,1/1/1001,03379617123

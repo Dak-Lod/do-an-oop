@@ -62,7 +62,7 @@ public class ManagerOrder extends Manager{
     }
 
 
-    public void main(String[] args) {
+    public void main() {
         while (true){
             int select = new MenuSelect(new String[] {
                 "Danh sách hoá đơn",

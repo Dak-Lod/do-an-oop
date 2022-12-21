@@ -2,8 +2,8 @@ public class Account {
     private String id;
     private String user;
     private String pass;
-    private Human info;
     private int role; // 0: Customer, 1: Employee, 2:Admin
+    private Human info;
     
     Account(String id, String user, String pass, int role, String firstName, String lastName, Date date, String phoneNum){ //Create Account from interface
         this.id = id;

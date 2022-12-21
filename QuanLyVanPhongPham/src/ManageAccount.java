@@ -1,13 +1,18 @@
-public class ManageAccount extends Manager{
-    private static Account[] accList = new Account[100];
-    
+public class ManageAccount extends Manager {
+    private Account[] accList = new Account[100];
+    private String file_url = "DSTK.txt";
     private int accCount = 0;
 
-    private String file_url = "";
+    public static String[] roleName = {
+        "Quản trị",
+        "Nhân viên",
+        "Khách hàng"
+    };
 
-    public void main(String[] args) {
-        while (true){
-            MenuSelect menu =  new MenuSelect(new String[] {
+
+    public void main() {
+        while (true) {
+            MenuSelect menu = new MenuSelect(new String[] {
                     "Danh sách tài khoản",
                     "Thêm tài khoản",
                     "Tìm kiếm tài khoản",
@@ -17,22 +22,25 @@ public class ManageAccount extends Manager{
                     "Ghi",
                     "Quay lại",
                     "Thoát"
-                });
+            });
             int select = menu.showMenu();
-            if (getMethod(select) == -1) return;
+            if (getMethod(select) == -1)
+                return;
         }
     }
 
     @Override
-    public void show (){
+    public void show() {
         if (Main.role == 0)
             show(accList);
-        else 
-        {
+        else {
             Account[] tmp = new Account[accCount];
             int count = -1;
-            for (Account ele : accList){
-                if (ele.getRole() == 2){
+            for (Account ele : accList) {
+                if (ele == null)
+                    break;
+                if (ele.getRole() == 2) {
+                    System.out.println(ele.getUser());
                     count++;
                     tmp[count] = ele;
                 }
@@ -41,131 +49,170 @@ public class ManageAccount extends Manager{
         }
     }
 
-    public void show(Account[] acc){
+    public void show(Account[] acc) {
         if (acc[0] == null) {
             System.out.println("Danh sách trống!");
             return;
         }
         System.out.printf("\t\t\t    %-20s    \t\t\t\n", "DANH SÁCH TÀI KHOẢN");
-        for (int i = 0; i < 92; i++)
+        for (int i = 0; i < 73; i++)
             System.out.print("=");
         System.out.println();
-        System.out.printf("|%-7s|%-14s|%-14s|\n","STT", "USERNAME", "ROLE");
-        for (int i = 0; i < 92; i++)
+        System.out.printf("|%-7s|%-7s|%-25s|%-14s|%-14s|\n", "STT", "ID", "Họ Tên", "Tài khoản", "Quyền");
+        for (int i = 0; i < 73; i++)
             System.out.print("-");
         System.out.println();
-        for (int i = 0; i < acc.length; i++){
-            if (acc[i] == null) break;
-            System.out.printf("|%-7s|%-14s|%-14s|\n", i, accList[i].getUser(), accList[i].getRole());
+        for (int i = 0; i < acc.length; i++) {
+            if (acc[i] == null)
+                break;
+            System.out.printf("|%-7s|%-7s|%-25s|%-14s|%-14s|\n", i, acc[i].getId(), acc[i].getInfo().getName(),acc[i].getUser(), roleName[acc[i].getRole()]);
         }
-        for (int i = 0; i < 92; i++)
+        for (int i = 0; i < 73; i++)
             System.out.print("=");
         System.out.println();
     }
 
     @Override
-    public void add(){
-        while (true){
-            int select = new MenuSelect(new String[] {
-                "Tạo tài khoản admin",
-                "Tạo tài khoản nhân viên",
-                "Tạo tài khoản khách hàng",
-                "Quay lại"
+    public void add() {
+        if (Main.role == 0){
+            while (true) {
+                int select = new MenuSelect(new String[] {
+                        "Tạo tài khoản admin",
+                        "Tạo tài khoản nhân viên",
+                        "Tạo tài khoản khách hàng",
+                        "Quay lại"
+                }).showMenu();
+    
+                if (select == 4)
+                    return;
+    
+                String[] info = new MenuInput(new String[] {
+                        "Nhập mã tài khoản",
+                        "Nhập tài khoản",
+                        "Nhập mật khẩu",
+                        "Nhập họ",
+                        "Nhập tên",
+                        "Nhập năm sinh (dd/mm/yyyy)",
+                        "Nhập số điện thoại"
+                }).showMenu();
+    
+                if (info == null)
+                    return;
+    
+                if (getAccountbyId(info[0], 0) != null) {
+                    System.out.println("Mã tài khoản bị trùng!");
+                    continue;
+                }
+    
+                accCount++;
+                accList[accCount - 1] = new Account(info[0], info[1], info[2], select - 1, info[3], info[4],
+                        Date.createDateFromString(info[5]), info[6]);
+                System.out.println("Tạo tài khoản thành công!");
+                accList[accCount - 1].printAccount();
+            }
+        }else {
+            while (true){
+                int select = new MenuSelect(new String[] {
+                    "Tạo tài khoản khách hàng",
+                    "Quay lại"
             }).showMenu();
-    
-    
-            if (select == 4)
+
+            if (select == 2)
                 return;
 
             String[] info = new MenuInput(new String[] {
-                "Nhập mã tài khoản",
-                "Nhập tài khoản",
-                "Nhập mật khẩu",
-                "Nhập họ",
-                "Nhập tên",
-                "Nhập năm sinh (dd/mm/yyyy)",   
-                "Nhập số điện thoại"
-            }).showMenu();   
-    
-            if (info == null) return;
+                    "Nhập mã tài khoản",
+                    "Nhập tài khoản",
+                    "Nhập mật khẩu",
+                    "Nhập họ",
+                    "Nhập tên",
+                    "Nhập năm sinh (dd/mm/yyyy)",
+                    "Nhập số điện thoại"
+            }).showMenu();
 
-            if (getAccountbyId(info[0]) != null){
+            if (info == null)
+                return;
+
+            if (getAccountbyId(info[0], 0) != null) {
                 System.out.println("Mã tài khoản bị trùng!");
                 continue;
             }
 
-            accCount ++;
-            accList[accCount - 1] = new Account(info[0], info[1], info[2], select - 1, info[3], info[4], Date.createDateFromString(info[5]), info[6]);
+            accCount++;
+            accList[accCount - 1] = new Account(info[0], info[1], info[2], 2, info[3], info[4],
+                    Date.createDateFromString(info[5]), info[6]);
             System.out.println("Tạo tài khoản thành công!");
             accList[accCount - 1].printAccount();
+            }
         }
     }
 
-    public void add(Account acc){
-        accCount ++;
-        idCount ++;
+    public void add(Account acc) {
+        accCount++;
         accList[accCount - 1] = acc;
     }
-    
+
     @Override
     public void edit() {
-        while (true){
-            if (accCount <= 0){
+        while (true) {
+            if (accCount <= 0) {
                 System.out.println("Danh sách tài khoản trống, không thể sửa tài khoản");
                 return;
             }
             String[] info = new MenuInput(new String[] {
-                "Nhập mã tài khoản cần sửa"
+                    "Nhập mã tài khoản cần sửa"
             }).showMenu();
 
-            if (info == null) return;
+            if (info == null)
+                return;
 
-            for (int i = 0; i < idCount; i++){
-                System.out.println("Test");
-                if (accList[i].getId().equals(info[0].trim())){
-                    while (true){
-                        int select = new MenuSelect(new String[]{
-                            "Thay đổi mã tài khoản",
-                            "Thay đổi username",
-                            "Thay đổi pass",
-                            "Thay đổi quyền",
-                            "Quay lại",
+            for (int i = 0; i < accCount; i++) {
+                if (accList[i].getId().equals(info[0].trim())) {
+                    if (Main.role != 0 && accList[i].getRole() != 2)
+                        break;
+                    while (true) {
+                        int select = new MenuSelect(new String[] {
+                                "Thay đổi username",
+                                "Thay đổi pass",
+                                "Thay đổi quyền",
+                                "Quay lại",
                         }).showMenu();
 
+                        if (select == -1) continue;
+                        if (select == 4) return;
+
                         MenuInput[] infoChange = new MenuInput[10];
-                        infoChange[0] = new MenuInput(new String[] {
-                            "id cũ: " + accList[i].getId() + "\nid mới"
-                        });
                         infoChange[1] = new MenuInput(new String[] {
-                            "username cũ: " + accList[i].getId() + "\nusername mới"
-                        });
-                        
-                        infoChange[2] = new MenuInput(new String[] {
-                            "pass cũ: " + accList[i].getId() + "\npass mới"
-                        });
-        
-                        infoChange[3] = new MenuInput(new String[] {
-                            "quyền cũ: " + accList[i].getId() + "\nquyền mới"
+                            "username cũ: " + accList[i].getUser() + "\nusername mới"
                         });
 
-                        String strChange;
-                        switch (select){
+                        infoChange[2] = new MenuInput(new String[] {
+                            "pass mới"
+                        });
+
+                        infoChange[3] = new MenuInput(new String[] {
+                            "quyền cũ: " + roleName[accList[i].getRole()] + "\nquyền mới (0/1/2)"
+                        });
+
+                        String tmp[] = infoChange[select].showMenu();
+                        if (tmp == null) continue;
+                        String strChange = tmp[0];
+                        switch (select) {
                             // case :
-                            //     strChange = infoChange[1].showMenu()[0];
-                            //     if (!strChange.trim().equals("")){
-                            //         if (getAccountbyId(strChange) != null){
-                            //             System.out.println("id mới bị trùng, không thể đổi!");
-                            //         } else {
-                            //             accList[i].setId(strChange);
-                            //             System.out.println("Đổi id thành công!");
-                            //             accList[i].printAccount();
-                            //         }
-                            //     }
-                            //     break;
+                            // strChange = infoChange[1].showMenu()[0];
+                            // if (!strChange.trim().equals("")){
+                            // if (getAccountbyId(strChange) != null){
+                            // System.out.println("id mới bị trùng, không thể đổi!");
+                            // } else {
+                            // accList[i].setId(strChange);
+                            // System.out.println("Đổi id thành công!");
+                            // accList[i].printAccount();
+                            // }
+                            // }
+                            // break;
                             case 1:
-                                strChange = infoChange[1].showMenu()[0];
-                                if (!strChange.trim().equals("")){
-                                    if (getAccountbyId(strChange) != null){
+                                if (!strChange.trim().equals("")) {
+                                    if (getAccountByUser(strChange, 0) != null) {
                                         System.out.println("username mới bị trùng, không thể đổi!");
                                     } else {
                                         accList[i].setUser(strChange);
@@ -175,31 +222,15 @@ public class ManageAccount extends Manager{
                                 }
                                 break;
                             case 2:
-                                strChange = infoChange[2].showMenu()[0];
-                                if (!strChange.trim().equals("")){
-                                    if (getAccountbyId(strChange) != null){
-                                        System.out.println("pass mới bị trùng, không thể đổi!");
-                                    } else {
-                                        accList[i].setPass(strChange);
-                                        System.out.println("Đổi pass thành công!");
-                                        accList[i].printAccount();
-                                    }
-                                }
+                                accList[i].setPass(strChange);
+                                System.out.println("Đổi pass thành công!");
+                                accList[i].printAccount();
                                 break;
                             case 3:
-                                strChange = infoChange[3].showMenu()[0];
-                                if (!strChange.trim().equals("")){
-                                    if (getAccountbyId(strChange) != null){
-                                        System.out.println("quyền mới bị trùng, không thể đổi!");
-                                    } else {
-                                        accList[i].setRole(i);
-                                        System.out.println("Đổi quyền thành công!");
-                                        accList[i].printAccount();
-                                    }
-                                }
+                                accList[i].setRole(Integer.parseInt(strChange));
+                                System.out.println("Đổi quyền thành công!");
+                                accList[i].printAccount();
                                 break;
-                            case 4:
-                                return;
                         }
                     }
                 }
@@ -210,75 +241,94 @@ public class ManageAccount extends Manager{
 
     @Override
     public void search() {
-        if (accCount == 0){
+        if (accCount == 0) {
             System.out.println("Danh sách tài khoản trống, không thể tìm kiếm tài khoản!");
             return;
         }
-        while (true){
-            int select = new MenuSelect(new String[]{
-                "Tìm kiếm theo mã tài khoản",
-                "Tìm kiếm theo username",
-                "Quay lại",
+        while (true) {
+            int select = new MenuSelect(new String[] {
+                    "Tìm kiếm theo mã tài khoản",
+                    "Tìm kiếm theo username",
+                    "Quay lại",
             }).showMenu();
 
+
+            if (select == -1)
+                continue;
+
             String[] data;
-            Account[] result = null;
-            switch (select){
+            switch (select) {
                 case 1:
                     data = new MenuInput(new String[] {
-                        "Nhập mã"
+                            "Nhập mã"
                     }).showMenu();
-                    Account tmp = getAccountbyId(data[0]);
-                    if (tmp != null){
-                        result = new Account[1];
-                        result[0] = tmp;
-                        result[0].printAccount();
+                    Account tmp = getAccountbyId(data[0], Main.role);
+                    if (tmp != null) {
+                        tmp.printAccount();
                     } else {
                         System.out.println("Không tìm thấy tài khoản!");
                     }
                     break;
                 case 2:
                     data = new MenuInput(new String[] {
-                        "Nhập username"
+                            "Nhập username"
                     }).showMenu();
-                    result = getAccountbyName(data[0]);
+                    getAccountbyName(data[0], Main.role);
                     break;
                 case 3:
                     return;
             }
-        }            
+        }
     }
 
     @Override
     public void remove() {
         String[] info = new MenuInput(new String[] {
-            "Nhập mã tài khoản cần xoá"
+                "Nhập mã tài khoản cần xoá"
         }).showMenu();
 
-        if (info != null){
-            for (int i = 0; i < idCount; i++) {
-                if (accList[i] == null) continue;
-                if (accList[i].getId().equals(info[0].trim())){
-                    accCount --;
-                    System.out.println("Đã xóa tài khoảm" + accList[i].getUser());
-                    for (int x = i; x < idCount - 1; x++) {
+        if (info != null) {
+            for (int i = 0; i < accCount; i++) {
+                // if (accList[i] == null)
+                //     continue;
+                if (accList[i].getId().equals(info[0].trim())) {
+                    if (Main.role != 0 && accList[i].getRole() != 2)
+                        break;
+                    System.out.println("Đã xóa tài khoản " + accList[i].getUser());
+                    // System.err.println(i + " " + (accCount - 1));
+                    for (int x = i; x < accCount - 1; x++) {
                         accList[x] = accList[x + 1];
                     }
-                    accList[idCount - 1] = null;
+                    accList[accCount - 1] = null;
+                    accCount--;
                     return;
                 }
             }
         }
+        System.out.println("Không tìm thấy tài khoản");
     }
 
     public void read() {
         String[] data = read(file_url);
-        accCount = 0;
-        for (int i = 0; i < data.length; i++){
-            if (data[i] == null) continue;
+        for (int i = 0; i < data.length; i++) {
+            if (data[i] == null)
+                continue;
             String[] info = data[i].split(",");
-            if (getAccountbyId(info[0]) != null || info.length < 8){
-                System.out.println("Thêm tài khoản dòng " + (i + 1) + " không thành công (Mã tài khoản bị trùng hoặc dòng dữ liệu sai)!");
+
+            if (info.length < 8){
+                System.out.println("Thêm tài khoản dòng " + (i + 1)
+                + " không thành công! (Dòng dữ liệu sai)");
+                continue;
+            }
+
+            if (Main.role != 0 && Integer.parseInt(info[3]) != 2){
+                System.out.println("Thêm tài khoản dòng " + (i + 1) + " không thành công! (Không có quyền thêm)");
+                continue;
+            }
+
+            if (getAccountbyId(info[0], 0) != null) {
+                System.out.println("Thêm tài khoản dòng " + (i + 1)
+                        + " không thành công! (Mã tài khoản bị trùng)");
                 continue;
             }
             add(new Account(info[0], info[1], info[2], Integer.parseInt(info[3]), info[4], info[5], Date.createDateFromString(info[6]), info[7]));
@@ -289,17 +339,24 @@ public class ManageAccount extends Manager{
         write(file_url, this.accListToStrings(accList));
     }
 
-    public Account[] getAccountbyName (String name) {
+    public Account[] getAccountbyName(String name, int role) {
         Account[] result = new Account[100];
         int index = -1;
-        for (int i = 0; i < idCount; i++){
-            if (accList[i] == null) continue;
-            if (((String) accList[i].getUser()).toLowerCase().indexOf(name.toLowerCase()) > -1 || ((String) accList[i].getUser()).toLowerCase().indexOf(Main.removeAccents(name.toLowerCase())) > -1){
-                index ++;
+        for (int i = 0; i < accCount; i++) {
+            if (accList[i] == null)
+                continue;
+            if (((String) accList[i].getUser()).toLowerCase().indexOf(name.toLowerCase()) > -1
+                    || ((String) accList[i].getUser()).toLowerCase()
+                            .indexOf(Main.removeAccents(name.toLowerCase())) > -1) {
+                if (role != 0 && accList[i].getRole() != 2){
+                    // System.out.println("Tìm thấy tài khoản nhưng không có quyền xem");
+                    continue;
+                }
+                index++;
                 result[index] = accList[i];
             }
         }
-        if (index > -1){
+        if (index > -1) {
             System.out.println("Đã tìm thấy " + (index + 1) + " tài khoản!");
             this.show(result);
         } else {
@@ -309,29 +366,44 @@ public class ManageAccount extends Manager{
         return result;
     }
 
-    public static Account getAccountbyId(String id){
-        for (int i = 0; i < idCount; i++){
-            if (accList[i] == null) continue;
-            if (accList[i].getId().equals(id.trim())){
+    public Account getAccountbyId(String id, int role) {
+        for (int i = 0; i < accCount; i++) {
+            if (accList[i] == null)
+                continue;
+            if (accList[i].getId().equals(id.trim())) {
+                if (role != 0 && accList[i].getRole() != 2){
+                    // System.out.println("Tìm thấy tài khoản nhưng không có quyền xem");
+                    return null;
+                }
                 return accList[i];
             }
-            return null;
+        }
+        // System.out.println("Không tìm thấy tài khoản!");
+        return null;
+    }
+    public Account getAccountByUser(String user, int role) {
+        for (int i = 0; i < accCount; i++) {
+            if (accList[i] == null)
+                continue;
+            if (accList[i].getUser().equals(user.trim())) {
+                if (role != 0 && accList[i].getRole() != 2){
+                    // System.out.println("Tìm thấy tài khoản nhưng không có quyền xem");
+                    return null;
+                }
+                return accList[i];
+            }
         }
         // System.out.println("Không tìm thấy tài khoản!");
         return null;
     }
 
-    public Account[] getAccountList(){
+    public Account[] getAccountList() {
         return accList;
     }
 
-    public void setAccountList(Account[] accList){
-        ManageAccount.accList = accList;
-    }
-
-    public String[] accListToStrings (Account[] accList){
+    public String[] accListToStrings(Account[] accList) {
         String[] str = new String[100];
-        for (int i = 0; i < accCount; i++){
+        for (int i = 0; i < accCount; i++) {
             str[i] = accList[i].toString();
         }
         return str;
