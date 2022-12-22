@@ -23,9 +23,6 @@ public class Account {
         }
     }
 
-    
-    
-
     public String getId() {
         return id;
     }
@@ -44,45 +41,25 @@ public class Account {
         return pass;
     }
 
-
-
-
     public void setPass(String pass) {
         this.pass = pass;
     }
-
-
-
 
     public Human getInfo() {
         return info;
     }
 
-
-
-
     public void setInfo(Human info) {
         this.info = info;
     }
-
-
-
 
     public int getRole() {
         return role;
     }
 
-
-
-
     public void setRole(int role) {
         this.role = role;
     }
-
-
-
-
-
 
     public void printAccount() {
         for (int i = 0; i < 49;i++){

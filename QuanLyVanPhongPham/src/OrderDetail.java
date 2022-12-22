@@ -36,6 +36,12 @@ public class OrderDetail {
         this.prd = prd;
     } 
 
-
+    @Override
+    public String toString() {
+        return String.join(",", new String[] {
+            prd.toString(),
+            Integer.toString(qty)
+        });
+    }
 
 }

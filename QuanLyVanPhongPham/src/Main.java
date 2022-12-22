@@ -7,6 +7,8 @@ public class Main {
     public static ManagerOrder qlHoaDon = new ManagerOrder();
     public static ManagerWareHouse qlWareHouse = new ManagerWareHouse();
     public static ManageAccount qlTaiKhoan = new ManageAccount();
+    public static Account loginAccount = null;
+
     // public static ManagerAccount qlTaiKhoan = new ManagerAccount();
     // public static ManagerWareHouse qlKhoHang = new ManagerWareHouse();
     public static int role = -1;
@@ -47,34 +49,56 @@ public class Main {
 
 
         while (true) {
-            int select = new MenuSelect(new String[] {
-                "Đăng nhập",
-                "Thoát"
-            }).showMenu();
+            for (int i = 0; i < 73; i++)
+                System.out.print("=");
+            System.out.println();
 
-            if (select == -1) continue;
+            System.out.printf("|\t%-54s\t\t|\n","CHÀO MỪNG BẠN ĐẾN VỚI PHẦN MỀM QUẢN LÝ VĂN PHÒNG PHẨM!");
+            
+            for (int i = 0; i < 73; i++)
+                System.out.print("=");
+            System.out.println("");
+            System.out.printf(" \t\t    %s    \t\t\t \n","Vui lòng đăng nhập để sử dụng!");
+            System.out.println("");
+            
+            
+            Scanner sc = new Scanner(System.in);
+            System.out.printf("\t\t\t%-9s: ","Tài khoản");
+            String user =  sc.nextLine();
+            System.out.printf("\t\t\t%-9s: ","Mật khẩu");
+            String pass =  sc.nextLine();
+            
+            System.out.println();
 
-            if (select == 2) exit();
+            // int select = new MenuSelect(new String[] {
+            //     "Đăng nhập",
+            //     "Thoát"
+            // }).showMenu();
 
-            if (Login())
+            // if (select == -1) continue;
+
+            // if (select == 2) exit();
+
+            if (Login(user, pass))
                 AfterLogin();
         }
 
     }
 
-    static boolean Login(){
-        String[] input = null;
-        input = new MenuInput(new String[]{
-            "Nhập tài khoản",
-            "Nhập mật khẩu"
-        }).showMenu();
-        if (input == null) return false;
+    static boolean Login(String user, String pass){
+        String[] input = {user, pass};
+        // input = new MenuInput(new String[]{
+        //     "Nhập tài khoản",
+        //     "Nhập mật khẩu"
+        // }).showMenu();
+        // if (input == null) return false;
         for (Account ele: qlTaiKhoan.getAccountList()){
             if (ele == null) break;
             if (ele.getUser().equals(input[0]) && ele.getPass().equals(input[1])
             && (ele.getRole() == 0 || ele.getRole() == 1)){
                 Main.role = ele.getRole();
                 System.out.println("Đăng nhập thành công! Chào mừng " + ele.getInfo().getName());
+                loginAccount = ele;
                 return true;
             }
         }

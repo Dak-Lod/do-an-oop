@@ -3,30 +3,62 @@ public class Order {
     private Account cus; //Id khách hàng
     private Account emp; // Id nhân viên
     int qty; // Số lượng
-    private Date dateCreadted; // ngày tạo đơn hàng
+    private Date dateCreated; // ngày tạo đơn hàng
     private float total; //Tổng tiền
-    private Product[] prd;
     private OrderDetail[] detail;
 
 
-    public Order(String id, Account cus, Account emp, int qty, Date dateCreadted, Product[] prd, OrderDetail[] detail) {
+    public Order(String id, Account cus, Account emp, int qty, Date dateCreated, OrderDetail[] detail) {
         this.id = id;
         this.cus = cus;
         this.emp = emp;
         this.qty = qty;
-        this.dateCreadted = dateCreadted;
-        this.prd = prd;
+        this.dateCreated = dateCreated;
         this.detail = detail;
     }
 
     
 
 
-
-
     public String getId() {
         return id;
     }
+
+
+
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+
+
+
+    public Account getCus() {
+        return cus;
+    }
+
+
+
+
+    public void setCus(Account cus) {
+        this.cus = cus;
+    }
+
+
+
+
+    public Account getEmp() {
+        return emp;
+    }
+
+
+
+
+    public void setEmp(Account emp) {
+        this.emp = emp;
+    }
+
 
 
 
@@ -36,50 +68,40 @@ public class Order {
 
 
 
+
+    public void setQty(int qty) {
+        this.qty = qty;
+    }
+
+
+
+
+    public Date getDateCreated() {
+        return dateCreated;
+    }
+
+
+
+
+    public void setDateCreated(Date dateCreated) {
+        this.dateCreated = dateCreated;
+    }
+
+
+
+
     public float getTotal() {
         return total;
     }
 
 
 
-    public Account getcus() {
-        return cus;
+
+    public void setTotal(float total) {
+        this.total = total;
     }
 
 
-    public void setcus(Account cus) {
-        this.cus = cus;
-    }
-
-
-    public Account getemp() {
-        return emp;
-    }
-
-
-    public void setemp(Account emp) {
-        this.emp = emp;
-    }
-
-
-    public Date getDateCreadted() {
-        return dateCreadted;
-    }
-
-
-    public void setDateCreadted(Date dateCreadted) {
-        this.dateCreadted = dateCreadted;
-    }
-
-
-    public Product[] getPrd() {
-        return prd;
-    }
-
-
-    public void setPrd(Product[] prd) {
-        this.prd = prd;
-    }
 
 
     public OrderDetail[] getDetail() {
@@ -87,50 +109,66 @@ public class Order {
     }
 
 
+
+
     public void setDetail(OrderDetail[] detail) {
         this.detail = detail;
     }
 
 
+
+
     public void updateOrder(){
-        int index = 0;
-        while (prd[index] != null)
-            index ++;
-        float sum = 0;
+        total = 0;
         for (int i = 0; i < qty; i++){
-            sum += this.detail[i].getprd().getPrice() * this.detail[i].getQty();
+            total += this.detail[i].getprd().getPrice() * this.detail[i].getQty();
         }
-        this.total = sum;
     }
     
     public void printOrder(){
         System.out.printf("\t\t\t\t    %-8s    \t\t\t\t\n", "HOÁ ĐƠN");
-        System.out.printf( "%s %-5s\n","Mã hoá đơn: ", this.getId());
-        System.out.println("Ngày mua: " + this.dateCreadted);
+        System.out.printf( "\t%s %-5s\n","Mã hoá đơn: ", id);
+        System.out.println("\tNgày mua: " + this.dateCreated);
         System.out.printf("\t\t\t    %-20s    \t\t\t\n", "Danh sách sản phẩm mua");
-        for (int i = 0; i < 84; i++)
+        for (int i = 0; i < 95; i++)
             System.out.print("=");
         System.out.println();
         // System.out.println("Tên khách hàng: " + this.getcus().getUser());
         // System.out.println("Tên nhân viên bán hàng: " + this.getcus().getUser());
         
-        System.out.printf("|%-7s|%-14s|%-14s|%-14s|%-14s|%-14s|\n", "Thứ tự", "Tên sản phẩm", "Mã sản phẩm", "Số lượng", "Đơn giá", "Thành tiền");
-        for (int i = 0; i < 84; i++)
+        System.out.printf("|%-7s|%-25s|%-14s|%-14s|%-14s|%-14s|\n", "Thứ tự", "Tên sản phẩm", "Mã sản phẩm", "Số lượng", "Đơn giá", "Thành tiền");
+        for (int i = 0; i < 95; i++)
             System.out.print("-");
         System.out.println();
-        for (int i = 0; i < this.getQty(); i++){
-            System.out.printf("|%-7s|%-14s|%-14s|%-14s|%-14s|%-14s|\n", i,this.prd[i].getProductName(),this.prd[i].getProductId(), this.getDetail()[i].getQty(), this.prd[i].getPrice(), this.prd[i].getPrice() * this.detail[i].getQty() );
+        for (int i = 0; i < qty; i++){
+            System.out.printf("|%-7s|%-25s|%-14s|%-14s|%-14s|%-14s|\n", i,this.detail[i].getprd().getProductName(),this.detail[i].getprd().getProductId(), detail[i].getQty(), this.detail[i].getprd().getPrice(), this.detail[i].getprd().getPrice() * this.detail[i].getQty() );
         }
         this.updateOrder();
-        for (int i = 0; i < 84; i++)
+        for (int i = 0; i < 95; i++)
             System.out.print("=");
         System.out.println();
-        System.out.printf( "\t\t\t\t\t\t\t\t\t%-20s\n","Tổng: " + this.total + "$");
+        System.out.printf( "\t\t\t\t\t\t\t\t\t%-31s\n","Tổng: " + this.total + "$");
         System.out.println("\n\n");
     }
 
     
-
+    @Override
+    public String toString() {
+        String tmp = "";
+        for (int i = 0; i < qty; i++)
+            tmp += detail[i].toString() + ',';
+        tmp = tmp.substring(0, tmp.length() - 1);
+        
+        return String.join(",", new String[] {
+            id,
+            cus.toString(),
+            emp.toString(),
+            Integer.toString(qty),
+            dateCreated.toString(),
+            Float.toString(total),
+            tmp
+        });
+    }
     
 
 }

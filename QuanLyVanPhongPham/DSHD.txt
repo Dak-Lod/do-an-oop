@@ -1,0 +1,1 @@
+od1,cus1,cus,cus,2,Trần,Lộc,6/5/2003,0337961759,ad1,admin,admin,0,Trần,Lộc,6/5/2003,0337961759,3,1/1/1,60.0,PRD1,Bút bi,2.0,Bút mực,10,PRD2,Bút chì,1.0,Bút chì 2B,10,PRD3,Thước thẳng 20cm,3.0,Thước kẻ,10

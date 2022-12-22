@@ -56,15 +56,70 @@ public class ManagerProduct extends Manager{
     @Override
     public void add(){
         
+        // MenuInput getId = new MenuInput(new String[] {
+        //     "Nhập mã sản phẩm"
+        // });
+
+        // String[] id = getId.showMenu();
+
+        // while(getProductById(id[0]) != null){
+        //     System.out.println("Mã sản phẩm bị trùng vui lòng nhập lại!");
+        //     id = getId.showMenu();
+        // }
+        // if (id == null) return;
+
+        // String[] info = new MenuInput(new String[] {
+        //     "Nhập tên sản phẩm",
+        //     "Nhập giá tiền (Đô la $)",
+        //     "Nhập mô tả sản phẩm",
+        //     "Nhập số lượng"
+        // }).showMenu();
+
+
+        // if (info == null) return;
+        // productCount ++;
+        // productList[productCount - 1] = new Product(id[0], info[0], Float.parseFloat(info[1]), info[2], Integer.parseInt(info[3]));
+        
+        // System.out.println("Tạo sản phẩm thành công!");
+
+        // productList[productCount - 1].printProduct();
+
         MenuInput getId = new MenuInput(new String[] {
             "Nhập mã sản phẩm"
         });
 
         String[] id = getId.showMenu();
-
-        while(getProductById(id[0]) != null){
-            System.out.println("Mã sản phẩm bị trùng vui lòng nhập lại!");
-            id = getId.showMenu();
+        while(getProductById(id[0]) != null){            
+            int select = new MenuSelect(new String[] {
+                "Nhập hàng",
+                "Nhập lại mã sản phẩm",
+                "Quay lại"
+            }).showMenu(); 
+            if (select == 3) return;
+            if (select == 1){ 
+                for (int i = 0; i < productCount; i++){
+                    while (true){
+                        MenuInput[] infoChange = new MenuInput[10];
+                        infoChange[0] = new MenuInput(new String[] {
+                            "Số lượng cũ: " + productList[i].getQty() + "\nSố lượng thêm vào"
+                        });
+                        String strChange;
+                        strChange = infoChange[0].showMenu()[0];
+                        if (!strChange.trim().equals("")){
+                            productList[i].setQty(productList[i].getQty() + Integer.parseInt(strChange));
+                            System.out.println("Thêm số lượng sản phẩm thành công!");
+                            productList[i].printProduct();
+                        }else {
+                            System.out.println("Số lượng sản phẩm cần thêm không được trống!");
+                        }
+                        break;           
+                    }     
+                }
+                
+            }
+            if (select == 2){
+                id = getId.showMenu();
+            }
         }
         if (id == null) return;
 
@@ -272,17 +327,30 @@ public class ManagerProduct extends Manager{
 
     public void read() {
         String[] data = read(file_url);
-        productCount = 0;
         for (int i = 0; i < data.length; i++) {
-            if (data[i] == null) continue;
-            if (data[4] == null || data[7].trim().equals(""))       
+            if (data[i] == null)
                 continue;
-            String[] tmp = data[i].split(",");
-            if (getProductById(tmp[0]) != null){
-                System.out.println("Thêm sản phẩm dòng " + (i + 1) + " không thành công (Mã sản phẩm bị trùng)!");
+            String[] info = data[i].split(",");
+
+            if (info.length < 4){
+                System.out.println("Thêm sản phẩm dòng " + (i + 1)
+                + " không thành công! (Dòng dữ liệu sai)");
                 continue;
             }
-            add(new Product(tmp[0], tmp[1], Float.parseFloat(tmp[2]), tmp[3], Integer.parseInt(tmp[4])));
+
+            Product prd = getProductById(info[0]);
+            if (prd != null) {
+                if (prd.getProductName().equals(info[1])){
+                    prd.setQty(prd.getQty() + Integer.parseInt(info[4]));
+                    System.out.println("Đã thêm " + Integer.parseInt(info[4]) + " sản phẩm vào " + prd.getProductName() + " từ dữ liệu dòng " + i);
+                }
+                else
+                    System.out.println("Thêm sản phẩm dòng " + (i + 1)
+                        + " không thành công! (Mã sản phẩm trùng nhưng không trùng tên)");
+                continue;
+            }
+            
+            add(new Product(info[0], info[1], Float.parseFloat(info[2]), info[3], Integer.parseInt(info[4])));
         }        
 
     }

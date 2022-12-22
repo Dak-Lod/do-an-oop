@@ -198,18 +198,6 @@ public class ManageAccount extends Manager {
                         if (tmp == null) continue;
                         String strChange = tmp[0];
                         switch (select) {
-                            // case :
-                            // strChange = infoChange[1].showMenu()[0];
-                            // if (!strChange.trim().equals("")){
-                            // if (getAccountbyId(strChange) != null){
-                            // System.out.println("id mới bị trùng, không thể đổi!");
-                            // } else {
-                            // accList[i].setId(strChange);
-                            // System.out.println("Đổi id thành công!");
-                            // accList[i].printAccount();
-                            // }
-                            // }
-                            // break;
                             case 1:
                                 if (!strChange.trim().equals("")) {
                                     if (getAccountByUser(strChange, 0) != null) {
@@ -287,22 +275,21 @@ public class ManageAccount extends Manager {
                 "Nhập mã tài khoản cần xoá"
         }).showMenu();
 
-        if (info != null) {
-            for (int i = 0; i < accCount; i++) {
-                // if (accList[i] == null)
-                //     continue;
-                if (accList[i].getId().equals(info[0].trim())) {
-                    if (Main.role != 0 && accList[i].getRole() != 2)
-                        break;
-                    System.out.println("Đã xóa tài khoản " + accList[i].getUser());
-                    // System.err.println(i + " " + (accCount - 1));
-                    for (int x = i; x < accCount - 1; x++) {
-                        accList[x] = accList[x + 1];
-                    }
-                    accList[accCount - 1] = null;
-                    accCount--;
-                    return;
+        if (info == null) return;
+        for (int i = 0; i < accCount; i++) {
+            // if (accList[i] == null)
+            //     continue;
+            if (accList[i].getId().equals(info[0].trim())) {
+                if (Main.role != 0 && accList[i].getRole() != 2)
+                    break;
+                System.out.println("Đã xóa tài khoản " + accList[i].getUser());
+                // System.err.println(i + " " + (accCount - 1));
+                for (int x = i; x < accCount - 1; x++) {
+                    accList[x] = accList[x + 1];
                 }
+                accList[accCount - 1] = null;
+                accCount--;
+                return;
             }
         }
         System.out.println("Không tìm thấy tài khoản");
@@ -403,7 +390,8 @@ public class ManageAccount extends Manager {
 
     public String[] accListToStrings(Account[] accList) {
         String[] str = new String[100];
-        for (int i = 0; i < accCount; i++) {
+        for (int i = 0; i < accList.length; i++) {
+            if (accList[i] ==  null) break;
             str[i] = accList[i].toString();
         }
         return str;
