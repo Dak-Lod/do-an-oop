@@ -157,11 +157,167 @@ public class ManagerOrder extends Manager{
     }
 
     public void edit() {
+        while (true){
+            if (orderCount <= 0) {
+                System.out.println("Danh sách sản phẩm trống! Không thể sửa sản phẩm!");
+                return;
+            }
+            String[] info = new MenuInput(new String[] {
+                "Nhập mã hoá đơn cần sửa"
+            }).showMenu();
+    
+            if (info == null) return;
+            
+            for (int i = 0; i < orderCount; i++){
+                System.out.println("Test");
+                if (orderList[i].getId().equals(info[0].trim())){
+                    
+                    while (true){
+                        int select = new MenuSelect(new String[] {
+                            "Thay đổi mã hoá đơn",
+                            "Thay đổi khách hàng",
+                            "Thay đổi nhân viên bán",
+                            "Quay lại"
+                            }).showMenu();
+                            
+                            MenuInput[] infoChange = new MenuInput[10];
+                            infoChange[0] = new MenuInput(new String[] {
+                                "Mã cũ: " + orderList[i].getId() + "\nMã mới"
+                            });
+                            
+                            infoChange[1] = new MenuInput(new String[] {
+                                "Tên khách cũ: " + orderList[i].getCus().getInfo().getName().toString() + "\nMã khách mới"
+                            });
 
+                            infoChange[2] = new MenuInput(new String[] {
+                                "Tên nhân viên cũ: " + orderList[i].getCus().getInfo().getName().toString() + "\nMã nhân viên mới"
+                            });
+            
+                            // infoChange[3] = new MenuInput(new String[] {
+                            //     "Danh sách sản phẩm cũ: " + orderList[i].getProductId() + "\nGiá mới"
+                            // });
+            
+                            // infoChange[3] = new MenuInput(new String[] {
+                            //     "Mô tả cũ: " + orderList[i].getProductId() + "\nMô tả mới"
+                            // });
+            
+                            String strChange;
+                            switch (select){
+                                case 1:
+                                    strChange = infoChange[0].showMenu()[0];
+                                    if (!strChange.trim().equals("")){
+                                        if (getOrderById(strChange) != null){
+                                            System.out.println("Mã mới bị trùng! Không thể đổi mã mới");
+                                        }else {
+                                            orderList[i].setId(strChange);
+                                            System.out.println("Đổi mã sản phẩm thành công!");
+                                            orderList[i].printOrder();
+                                        }
+                                        break;
+                                    }
+                                    System.out.println("Mã hoá đơn không được trống!");
+                                    break;
+                                case 2:
+                                    strChange = infoChange[1].showMenu()[0];
+                                    if (!strChange.trim().equals("")){
+                                        Account find = Main.qlTaiKhoan.getAccountbyId(strChange, 1);
+                                        if (find == null){
+                                            System.out.println("Mã khách hàng không tồn tại!");
+                                            break;
+                                        }
+                                        orderList[i].setCus(find);
+                                        System.out.println("Đổi khách hàng thành công!");
+                                    }else {
+                                        System.out.println("Khách hàng không được trống!");
+                                    }
+                                    break;
+                                
+                                case 3:
+                                strChange = infoChange[1].showMenu()[0];
+                                if (!strChange.trim().equals("")){
+                                    Account find = Main.qlTaiKhoan.getAccountbyId(strChange, 0);
+                                    if (find == null){
+                                        System.out.println("Mã nhân viên không tồn tại!");
+                                        break;
+                                    }
+                                    orderList[i].setCus(find);
+                                    System.out.println("Đổi nhân viên thành công!");
+                                }else {
+                                    System.out.println("Nhân viên không được trống!");
+                                }
+                                break;
+                            
+                                case 4:
+                                    return;
+            
+                            }
+                        }
+                        
+                    }else {
+                        break;
+
+                    }
+
+            }
+            System.out.println("Không tìm thấy sản phẩm");
+
+        }
     }
 
     public void search() {
-        
+        if (orderCount == 0){
+            System.out.println("Danh sách sản phẩm trống, không thể tìm kiếm!");
+            return;
+        }
+        while (true){
+            int select = new MenuSelect(new String[] {
+                "Tìm kiếm theo mã",
+                "Tìm kiếm theo tên khách hàng",
+                "Tìm kiếm theo tên người bán",
+                "Tìm kiếm theo giá tiền",
+                "Quay lại"
+            }).showMenu();
+    
+            String[] data;
+            Order[] result = null;
+            switch (select){
+                case 1: 
+                    data = new MenuInput(new String[] {
+                        "Nhập mã"
+                    }).showMenu();
+                    Order tmp = getOrderById(data[0]);
+                    if (tmp != null){
+                        result = new Order[1];
+                        result[0] = tmp;
+                        result[0].printOrder();
+                    }else 
+                        System.out.println("Không tìm thấy hoá đơn!");
+                    break;
+                case 2: 
+                    data = new MenuInput(new String[] {
+                        "Nhập tên khách hàng"
+                    }).showMenu();
+                    result = getOderByNameCus(data[0]);
+                    break;                    
+                    
+                case 3: 
+                    data = new MenuInput(new String[] {
+                        "Nhập tên nhân viên bán"
+                    }).showMenu();
+                    result = getOderByNameEmp(data[0]);
+                    break; 
+
+                case 4: 
+                    data = new MenuInput(new String[] {
+                        "Nhập giá thấp nhất",
+                        "Nhập giá lớn nhất"
+                    }).showMenu();
+                    result = getOrderByPrice(data[0], data[1]);
+                    continue;
+                case 5:
+                    return;
+            }  
+        }
     }
 
     public void read() {
@@ -241,6 +397,101 @@ public class ManagerOrder extends Manager{
             str[i] = ordList[i].toString();
         }
         return str;
+    }
+
+    public Order[] getOderByNameCus(String name){
+        Order[] result = new Order[100];
+        int index = -1;
+        for (int i = 0; i < orderCount; i++) {
+            if (orderList[i] == null) continue;
+            if (orderList[i].getCus().getInfo().getName().toString().toLowerCase().indexOf(name.toLowerCase()) > -1 || 
+            orderList[i].getCus().getInfo().getName().toString().toLowerCase().indexOf(Main.removeAccents(name.toLowerCase())) > -1){
+                index ++;
+                result[index] = orderList[i];
+            }
+        }  
+        if (index > -1){
+            System.out.println("Đã tìm thấy " + (index + 1) + " hoá đơn");
+            // for (Product item : result){
+            //     if (item == null) break;
+            //     item.printProduct();
+            // }
+            this.show(result);
+        }else {
+            System.out.println("Không tìm thấy hoá đơn!");
+            return null;
+        }
+        return result;
+    }
+
+    public Order[] getOderByNameEmp(String name){
+        Order[] result = new Order[100];
+        int index = -1;
+        for (int i = 0; i < orderCount; i++) {
+            if (orderList[i] == null) continue;
+            if (orderList[i].getEmp().getInfo().getName().toString().toLowerCase().indexOf(name.toLowerCase()) > -1 || 
+            orderList[i].getEmp().getInfo().getName().toString().toLowerCase().indexOf(Main.removeAccents(name.toLowerCase())) > -1){
+                index ++;
+                result[index] = orderList[i];
+            }
+        }  
+        if (index > -1){
+            System.out.println("Đã tìm thấy " + (index + 1) + " hoá đơn");
+            // for (Product item : result){
+            //     if (item == null) break;
+            //     item.printProduct();
+            // }
+            this.show(result);
+        }else {
+            System.out.println("Không tìm thấy hoá đơn!");
+            return null;
+        }
+        return result;
+    }
+
+    public Order[] getOrderByPrice(String min, String max){
+        if (Float.parseFloat(min) < 0 || Float.parseFloat(max) < 0){
+            System.out.println();
+            return null;
+        }
+        if (min.trim() == "")
+            min = "-1";
+        else if (Float.parseFloat(min) < 0){
+            System.out.println("Thành tiền không được âm");
+            return null;
+        }
+        if (max.trim() == "")
+            max = "-1";
+        else if (Float.parseFloat(max) < 0){
+            System.out.println("Thành tiền không được âm");
+            return null;
+        }
+        return getOrderByPrice(Float.parseFloat(min), Float.parseFloat(max));
+    }
+
+    public Order[] getOrderByPrice(float min, float max){
+        Order[] result = new Order[100];
+        int index = -1;
+        for (int i = 0; i < orderCount; i++) {
+            if (orderList[i] == null) continue;
+            if (min == -1 || orderList[i].getTotal() >= min)
+            if (max == -1 || orderList[i].getTotal() <= max){
+                index++;
+                result[index] = orderList[i];
+            }
+        }  
+        if (index > -1){
+            System.out.println("Đã tìm thấy " + (index + 1) + " sản phẩm");
+            // for (Product item : result){
+            //     if (item == null) break;
+            //     item.printProduct();
+            // }
+            this.show(result);
+        }else {
+            System.out.println("Không tìm thấy sản phẩm!");
+            return null;
+        }
+        return result;
     }
 
 }

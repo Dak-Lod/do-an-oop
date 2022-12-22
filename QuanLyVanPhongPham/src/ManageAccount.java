@@ -104,6 +104,13 @@ public class ManageAccount extends Manager {
                     continue;
                 }
     
+                try {
+                    Date.createDateFromString(info[5]);
+                    Integer.parseInt(info[6]);
+                }catch (Exception e){
+                    System.out.println("Dữ liệu nhập không hợp lệ!");
+                }
+
                 accCount++;
                 accList[accCount - 1] = new Account(info[0], info[1], info[2], select - 1, info[3], info[4],
                         Date.createDateFromString(info[5]), info[6]);
