@@ -120,7 +120,7 @@ public class ManagerOrder extends Manager{
     public void add(String id, Account cus, Account emp, int qty, String date, OrderDetail[] ord ){
         orderCount++;
         orderList[orderCount - 1] = new Order(id, cus, emp, qty, Date.createDateFromString(date), ord);
-        // this.orderList[orderCount - 1].updateOrder();
+        this.orderList[orderCount - 1].updateOrder();
     }
 
     @Override
@@ -169,7 +169,7 @@ public class ManagerOrder extends Manager{
             if (info == null) return;
             
             for (int i = 0; i < orderCount; i++){
-                System.out.println("Test");
+                // System.out.println("Test");
                 if (orderList[i].getId().equals(info[0].trim())){
                     
                     while (true){
@@ -382,7 +382,7 @@ public class ManagerOrder extends Manager{
     public Order getOrderById(String id){
         for (Order ele: orderList){
             if (ele == null) break;
-            if (ele.getId() == id.trim()){
+            if (ele.getId().equals(id.trim())){
                 return ele;
             }
         }
