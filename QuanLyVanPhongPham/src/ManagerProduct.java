@@ -84,41 +84,40 @@ public class ManagerProduct extends Manager{
 
         // productList[productCount - 1].printProduct();
 
-        MenuInput getId = new MenuInput(new String[] {
+        String[] id = new MenuInput(new String[] {
             "Nhập mã sản phẩm"
-        });
+        }).showMenu();
+        if (id == null) return;
 
-        String[] id = getId.showMenu();
-        while(getProductById(id[0]) != null){            
+        Product prd = getProductById(id[0]);
+        if (prd != null){     
+            System.out.println("Mã sản phẩm đã tồn tại bạn có muốn thêm số lượng hàng hay không?");       
             int select = new MenuSelect(new String[] {
-                "Nhập hàng",
+                "Thêm số lượng hàng",
                 "Nhập lại mã sản phẩm",
                 "Quay lại"
             }).showMenu(); 
             if (select == 3) return;
             if (select == 1){ 
-                for (int i = 0; i < productCount; i++){
-                    while (true){
-                        MenuInput[] infoChange = new MenuInput[10];
-                        infoChange[0] = new MenuInput(new String[] {
-                            "Số lượng cũ: " + productList[i].getQty() + "\nSố lượng thêm vào"
-                        });
-                        String strChange;
-                        strChange = infoChange[0].showMenu()[0];
-                        if (!strChange.trim().equals("")){
-                            productList[i].setQty(productList[i].getQty() + Integer.parseInt(strChange));
-                            System.out.println("Thêm số lượng sản phẩm thành công!");
-                            productList[i].printProduct();
-                        }else {
-                            System.out.println("Số lượng sản phẩm cần thêm không được trống!");
-                        }
-                        break;           
-                    }     
+                MenuInput[] infoChange = new MenuInput[10];
+                infoChange[0] = new MenuInput(new String[] {
+                    "Số lượng cần thêm"
+                });
+                String strChange;
+                strChange = infoChange[0].showMenu()[0];
+                if (!strChange.trim().equals("")){
+                    prd.setQty(prd.getQty() + Integer.parseInt(strChange));
+                    System.out.println("Thêm số lượng sản phẩm thành công!");
+                    prd.printProduct();
+                }else {
+                    System.out.println("Số lượng sản phẩm cần thêm không được trống!");
                 }
-                
-            }
+                return;           
+            }     
+        
             if (select == 2){
-                id = getId.showMenu();
+                add();
+                return;
             }
         }
         if (id == null) return;
